@@ -32,7 +32,7 @@
 											Name
 										</div>
 										<div class="col-md-9">
-											<input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" required>
+											<input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
@@ -42,7 +42,7 @@
 											Email
 										</div>
 										<div class="col-md-9">
-											<input type="email" name="email" id="" class="form-control" value="{{ old('email') }}" required>
+											<input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
@@ -52,7 +52,7 @@
 											Password
 										</div>
 										<div class="col-md-9">
-											<input type="password" name="password" id="" class="form-control" required>
+											<input type="password" name="password" class="form-control" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
@@ -62,7 +62,7 @@
 											Confirm password
 										</div>
 										<div class="col-md-9">
-											<input type="password" name="password_confirmation" id="" class="form-control" required>
+											<input type="password" name="password_confirmation" class="form-control" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
@@ -73,7 +73,7 @@
 											Role
 										</div>
 										<div class="col-md-9">
-											<select name="role" id="" class="form-control" required>
+											<select name="role" class="form-control" required>
 												<option value="admin">Admin</option>
 												<option value="staff">Staff</option>
 											</select>

@@ -1,0 +1,24 @@
+Dashboard
+Scheduling
+Inventory
+Recording
+User management
+
+*notif tru system
+
+
+
+***************************
+APP_VERSION: 50%
+***************************
+Inventory Management
+User Management
+Dashboard
+
+
+***************************
+APP_VERSION: 100%
+***************************
+Scheduling Management
+Recording Management
+Notif

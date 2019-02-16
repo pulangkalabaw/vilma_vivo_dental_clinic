@@ -156,6 +156,19 @@ class UserController extends Controller
 	*/
 	public function destroy($id)
 	{
-		//
+		if (User::findOrFail($id)->delete()) {
+            return back()->with([
+                'notif.style' => 'success',
+                'notif.icon' => 'plus-circle',
+                'notif.message' => 'Delete successful',
+            ]);
+        }
+        else {
+            return back()->with([
+                'notif.style' => 'danger',
+                'notif.icon' => 'times-circle',
+                'notif.message' => 'Failed to delete - Please try again',
+            ]);
+        }
 	}
 }

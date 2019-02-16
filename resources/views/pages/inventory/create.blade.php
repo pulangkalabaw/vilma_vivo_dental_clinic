@@ -8,13 +8,13 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-md-6">
-								<span class="fa fa-users"></span>
-								User Management / Create
+								<span class="fa fa-book"></span>
+								Inventory Management / Create
 							</div>
 							<div class="col-md-6 text-right">
-								<a href="{{ route('app.users.index') }}" class="btn btn-sm btn-default">
-									<span class="fa fa-th-list"></span>
-									List of users
+								<a href="{{ route('app.inventory.index') }}" class="btn btn-sm btn-default">
+									<span class="fa fa-book"></span>
+									List of inventories
 								</a>
 							</div>
 						</div>
@@ -24,45 +24,45 @@
 						@include('includes.notif')
 						<div class="row">
 							<div class="col-md-6">
-								<form class="" action="{{ route('app.users.store') }}" method="post">
+								<form class="" action="{{ route('app.inventory.store') }}" method="post">
 
 									{{ csrf_field() }}
 									<div class="row">
 										<div class="col-md-3">
-											Name
+											Item #
 										</div>
 										<div class="col-md-9">
-											<input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" required>
+											<input type="text" name="item_id" id="" class="form-control" value="{{ old('item_id') }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
 
 									<div class="row">
 										<div class="col-md-3">
-											Email
+											Item name
 										</div>
 										<div class="col-md-9">
-											<input type="email" name="email" id="" class="form-control" value="{{ old('email') }}" required>
+											<input type="text" name="item_name" id="" class="form-control" value="{{ old('item_name') }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
 
 									<div class="row">
 										<div class="col-md-3">
-											Password
+											Quantity
 										</div>
 										<div class="col-md-9">
-											<input type="password" name="password" id="" class="form-control" required>
+											<input type="number" name="quantity" id="" class="form-control" value="{{ old('quantity') }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
 
 									<div class="row">
 										<div class="col-md-3">
-											Confirm password
+											Item date
 										</div>
 										<div class="col-md-9">
-											<input type="password" name="password_confirmation" id="" class="form-control" required>
+											<input type="date" name="item_date" id="" class="form-control" value="{{ old('item_date') }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
@@ -70,13 +70,10 @@
 
 									<div class="row">
 										<div class="col-md-3">
-											Role
+											Description
 										</div>
 										<div class="col-md-9">
-											<select name="role" id="" class="form-control" required>
-												<option value="admin">Admin</option>
-												<option value="staff">Staff</option>
-											</select>
+											<textarea name="description" maxlength="150" id="" class="form-control" required>{{ old('description') }}</textarea>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />

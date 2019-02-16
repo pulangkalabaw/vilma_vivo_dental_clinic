@@ -73,27 +73,36 @@
 									</div>
 									<div class="clearfix"></div><br />
 
-
-									<div class="row">
-										<div class="col-md-3">
-											Role
+									@if (Auth::user()->id != $user->id)
+										<div class="row">
+											<div class="col-md-3">
+												Role
+											</div>
+											<div class="col-md-9">
+												<select name="role" id="" class="form-control" required>
+													<option value="admin">Admin</option>
+													<option value="staff">Staff</option>
+												</select>
+											</div>
 										</div>
-										<div class="col-md-9">
-											<select name="role" id="" class="form-control" required>
-												<option value="admin">Admin</option>
-												<option value="staff">Staff</option>
-											</select>
-										</div>
-									</div>
-									<div class="clearfix"></div><br />
+										<div class="clearfix"></div><br />
+									@endif
 
 									<div class="row">
 										<div class="col-md-3"></div>
 										<div class="col-md-9">
-											<button class="btn btn-sm btn-success pull-right">
-												<span class="fa fa-edit"></span>
-												Update changes
-											</button>
+											@if (Auth::user()->id != $user->id)
+												<button class="btn btn-sm btn-success pull-right">
+													<span class="fa fa-edit"></span>
+													Update changes
+
+												</button>
+											@else
+												<button class="btn btn-sm btn-danger pull-right">
+													<span class="fa fa-edit"></span>
+													Update your account
+												</button>
+											@endif
 										</div>
 									</div>
 									<div class="clearfix"></div><br />

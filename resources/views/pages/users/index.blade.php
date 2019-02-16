@@ -22,19 +22,6 @@
 					<div class="panel-body">
 
 						<div class="row">
-							{{--
-							@if (
-								!empty(Request::get('search_string'))
-								|| !empty(Request::get('show'))
-								|| (!empty(Request::get('sort_in'))
-								&& !empty(Request::get('sort_by')))
-								)
-								<div class="breadcrumb">
-									<b><span class='fa fa-filter'></span> Filtered ({{ $total }})</b><br>
-									{!! filteredBy(request()) !!}
-								</div>
-							@endif
-							--}}
 
 							@include('includes.notif')
 
@@ -81,8 +68,18 @@
 											<span class='fa fa-sort'></span>
 										</a>
 									</th>
-									<th>Email</th>
-									<th>Role</th>
+									<th>
+										Email
+										<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'email', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+											<span class='fa fa-sort'></span>
+										</a>
+									</th>
+									<th>
+										Role
+										<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'role', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+											<span class='fa fa-sort'></span>
+										</a>
+									</th>
 									<th>Status</th>
 									<th>Action</th>
 								</tr>
@@ -107,6 +104,12 @@
 											<a href="{{ route('app.users.edit', $user->id) }}" class="btn btn-xs btn-success">
 												<span class="fa fa-edit"></span> Edit
 											</a>
+											<button class="btn btn-xs btn-danger" for="submit-form" tabindex="0" form="{{ $user->id }}myform"><span class='fa fa-trash'></span> Delete
+												<form class="delete" method="POST" action="{{ route('app.users.destroy', $user->id) }}" id="{{ $user->id }}myform">
+													{{ method_field('DELETE') }}
+													{{ csrf_field() }}
+												</form>
+											</button>
 										</td>
 									</tr>
 								@endforeach
@@ -126,4 +129,14 @@
 			</div>
 		</div>
 	</div>
+
+	<script
+	src="{{ asset('js/jquery.min.js') }}"></script>
+	<script>
+	$(document).ready(function() {
+		$(".delete").on("submit", function(){
+			return confirm("Are you sure?");
+		});
+	});
+</script>
 @endsection
