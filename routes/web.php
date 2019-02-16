@@ -17,9 +17,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+
 
 Route::group(['middleware' => 'auth', 'as' => 'app.'], function() {
+
+	Route::get('/home', 'HomeController@index')->name('home'); // DASHBOARD
     Route::resource('users', 'UserController');
     Route::resource('inventory', 'InventoryController');
 });
