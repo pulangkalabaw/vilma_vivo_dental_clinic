@@ -8,67 +8,67 @@
 					<div class="panel-heading">
 						<div class="row">
 							<div class="col-md-6">
-								<span class="fa fa-users"></span>
-								User Management / {{ $user->name }}
+								<span class="fa fa-book"></span>
+								Inventory Management / Create
 							</div>
 							<div class="col-md-6 text-right">
-								<a href="{{ route('app.users.create') }}" class="btn btn-sm btn-primary">
+								<a href="{{ route('app.inventory.create') }}" class="btn btn-sm btn-primary">
 									<span class="fa fa-plus-circle"></span>
-									Add new user
+									Add new item
 								</a>
-								<a href="{{ route('app.users.index') }}" class="btn btn-sm btn-default">
-									<span class="fa fa-th-list"></span>
-									List of users
+								<a href="{{ route('app.inventory.index') }}" class="btn btn-sm btn-default">
+									<span class="fa fa-book"></span>
+									List of inventories
 								</a>
 							</div>
 						</div>
 					</div>
 					<div class="panel-body">
+
 						@include('includes.notif')
 						<div class="row">
 							<div class="col-md-6">
-								<form class="" action="{{ route('app.users.update', $user->id) }}" method="post">
+								<form class="" action="{{ route('app.inventory.update', $inventory->id) }}" method="post">
 
 									{{ csrf_field() }}
 									{{ method_field('PUT') }}
+
 									<div class="row">
 										<div class="col-md-3">
-											Name
+											Item #
 										</div>
 										<div class="col-md-9">
-											<input type="text" name="name" id="" class="form-control" value="{{ $user->name }}" required>
+											<input type="text" name="item_id" id="" class="form-control" value="{{ $inventory->item_id }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
 
 									<div class="row">
 										<div class="col-md-3">
-											Email
+											Item name
 										</div>
 										<div class="col-md-9">
-											<input type="email" name="email" id="" class="form-control" value="{{ $user->email }}" required>
+											<input type="text" name="item_name" id="" class="form-control" value="{{ $inventory->item_name }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
 
 									<div class="row">
 										<div class="col-md-3">
-											Password
+											Quantity
 										</div>
 										<div class="col-md-9">
-											<input type="password" name="password" id="" class="form-control">
-											<small>if no change, leave it blank </small>
+											<input type="number" name="quantity" id="" class="form-control" value="{{ $inventory->quantity }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
 
 									<div class="row">
 										<div class="col-md-3">
-											Confirm password
+											Item date
 										</div>
 										<div class="col-md-9">
-											<input type="password" name="password_confirmation" id="" class="form-control">
-											<small>if no change, leave it blank </small>
+											<input type="date" name="item_date" id="" class="form-control" value="{{ $inventory->item_date }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
@@ -76,13 +76,10 @@
 
 									<div class="row">
 										<div class="col-md-3">
-											Role
+											Description
 										</div>
 										<div class="col-md-9">
-											<select name="role" id="" class="form-control" required>
-												<option value="admin">Admin</option>
-												<option value="staff">Staff</option>
-											</select>
+											<textarea name="description" maxlength="150" id="" class="form-control" required>{{ $inventory->description }}</textarea>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />
@@ -90,7 +87,7 @@
 									<div class="row">
 										<div class="col-md-3"></div>
 										<div class="col-md-9">
-											<button class="btn btn-sm btn-success pull-right">
+											<button class="btn btn-success btn-sm pull-right">
 												<span class="fa fa-edit"></span>
 												Update changes
 											</button>
