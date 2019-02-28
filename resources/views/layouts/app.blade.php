@@ -51,6 +51,7 @@
 								<a href="{{ route('app.home') }}">Home</a>
 							</li>
 							<li><a href="{{ route('app.users.index') }}">Users</a></li>
+							<li><a href="{{ route('app.schedule.index') }}">Schedule</a></li>
 							<li><a href="{{ route('app.inventory.index') }}">Inventory</a></li>
 
 							<li class="dropdown">
