@@ -16,9 +16,20 @@ use Faker\Generator as Faker;
 $factory->define(App\User::class, function (Faker $faker) {
     static $password;
 
+    if(empty(App\User::where('email', 'monica@gmail.com')->first())){
+        App\User::create([
+            'name' => 'MONICA J. BARIL',
+            'email' => 'monica@gmail.com',
+            'role' => 'administrator',
+            'password' => bcrypt('sadsad'),
+            'remember_token' => str_random(10),
+        ]);
+    }
+
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
+        'role' => 'administrator',
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
