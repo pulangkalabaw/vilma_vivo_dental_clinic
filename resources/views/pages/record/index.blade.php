@@ -9,12 +9,12 @@
 						<div class="row">
 							<div class="col-md-6">
 								<span class="fa fa-book"></span>
-								Scheduling Management
+								Record Management
 							</div>
 							<div class="col-md-6 text-right">
-								<a href="{{ route('app.schedule.create') }}" class="btn btn-sm btn-primary">
+								<a href="{{ route('app.record.create') }}" class="btn btn-sm btn-primary">
 									<span class="fa fa-plus-circle"></span>
-									Add new schedule
+									Add new record
 								</a>
 							</div>
 						</div>
@@ -109,26 +109,26 @@
 						</tr>
 					</thead>
 					<tbody>
-						@foreach ($schedules as $schedule)
+						{{-- @foreach ($records as $record)
 							<tr>
-								<td>{{ $schedule->name }}</td>
-								<td>{{ $schedule->contact }}</td>
-								<td>{{ $schedule->address }}</td>
-								<td>{{ $schedule->date }}</td>
-								<td>{{ $schedule->time }}</td>
+								<td>{{ $record->name }}</td>
+								<td>{{ $record->contact }}</td>
+								<td>{{ $record->address }}</td>
+								<td>{{ $record->date }}</td>
+								<td>{{ $record->time }}</td>
 								<td>
-									<a href="{{ route('app.schedule.edit', $schedule->id) }}" class="btn btn-xs btn-success">
+									<a href="{{ route('app.record.edit', $record->id) }}" class="btn btn-xs btn-success">
 										<span class="fa fa-edit"></span> Edit
 									</a>
-									<button class="btn btn-xs btn-danger" for="submit-form" tabindex="0" form="{{ $schedule->id }}myform"><span class='fa fa-trash'></span> Delete
-										<form class="delete" method="POST" action="{{ route('app.schedule.destroy', $schedule->id) }}" id="{{ $schedule->id }}myform">
+									<button class="btn btn-xs btn-danger" for="submit-form" tabindex="0" form="{{ $record->id }}myform"><span class='fa fa-trash'></span> Delete
+										<form class="delete" method="POST" action="{{ route('app.record.destroy', $record->id) }}" id="{{ $record->id }}myform">
 											{{ method_field('DELETE') }}
 											{{ csrf_field() }}
 										</form>
 									</button>
 								</td>
 							</tr>
-						@endforeach
+						@endforeach --}}
 					</tbody>
 				</table>
 				<br>

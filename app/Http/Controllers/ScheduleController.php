@@ -39,6 +39,8 @@ class ScheduleController extends Controller
     {
 		$v = Validator::make($request->all(), [
 			'name' => 'required|string|max:255',
+			'contact' => 'required',
+			'address' => 'required|string|max:255',
 			'date' => 'required',
 			'time' => 'required',
 		]);

@@ -27,36 +27,67 @@
 								<form class="" action="{{ route('app.schedule.store') }}" method="post">
 
 									{{ csrf_field() }}
-									<div class="row">
-										<div class="col-md-3">
-											name
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-12">
+												<h4>Customer Information</h4>
+											</div>
 										</div>
-										<div class="col-md-9">
-											<input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" required>
+										<div class="row">
+											<div class="col-md-3">
+												Name
+											</div>
+											<div class="col-md-9">
+												<input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" required>
+											</div>
 										</div>
+										<div class="clearfix"></div><br />
+										<div class="row">
+											<div class="col-md-3">
+												Contact
+											</div>
+											<div class="col-md-9">
+												<input type="text" name="contact" id="" class="form-control" value="{{ old('contact') }}" required>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
+										<div class="row">
+											<div class="col-md-3">
+												Address
+											</div>
+											<div class="col-md-9">
+												<input type="text" name="address" id="" class="form-control" value="{{ old('address') }}" required>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
 									</div>
-									<div class="clearfix"></div><br />
 
-									<div class="row">
-										<div class="col-md-3">
-											Date
+									<div class="form-group">
+										<div class="row">
+											<div class="col-md-12">
+												<h4>Schedule Details</h4>
+											</div>
 										</div>
-										<div class="col-md-9">
-											<input type="date" name="date" id="" class="form-control" value="{{ old('date') }}" required>
+										<div class="row">
+											<div class="col-md-3">
+												Date
+											</div>
+											<div class="col-md-9">
+												<input type="date" name="date" id="" class="form-control" value="{{ old('date') }}" required>
+											</div>
 										</div>
+										<div class="clearfix"></div><br />
+
+										<div class="row">
+											<div class="col-md-3">
+												Time
+											</div>
+											<div class="col-md-9">
+												<input type="time" name="time" id="" class="form-control" value="{{ old('time') }}" required>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
 									</div>
-									<div class="clearfix"></div><br />
-
-									<div class="row">
-										<div class="col-md-3">
-											Time
-										</div>
-										<div class="col-md-9">
-											<input type="time" name="time" id="" class="form-control" value="{{ old('time') }}" required>
-										</div>
-									</div>
-									<div class="clearfix"></div><br />
-
 									<div class="row">
 										<div class="col-md-3"></div>
 										<div class="col-md-9">

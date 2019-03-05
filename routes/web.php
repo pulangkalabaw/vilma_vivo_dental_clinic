@@ -25,4 +25,5 @@ Route::group(['middleware' => 'auth', 'as' => 'app.'], function() {
     Route::resource('users', 'UserController');
     Route::resource('inventory', 'InventoryController');
     Route::resource('schedule', 'ScheduleController');
+    Route::resource('record', 'RecordController');
 });

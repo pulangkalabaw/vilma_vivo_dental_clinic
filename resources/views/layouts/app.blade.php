@@ -12,6 +12,7 @@
 
 	<!-- Styles -->
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('public/assets/css/custom.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -50,9 +51,10 @@
 							<li>
 								<a href="{{ route('app.home') }}">Home</a>
 							</li>
-							<li><a href="{{ route('app.users.index') }}">Users</a></li>
 							<li><a href="{{ route('app.schedule.index') }}">Schedule</a></li>
+							<li><a href="{{ route('app.record.index') }}">Record</a></li>
 							<li><a href="{{ route('app.inventory.index') }}">Inventory</a></li>
+							<li><a href="{{ route('app.users.index') }}">Users</a></li>
 
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
