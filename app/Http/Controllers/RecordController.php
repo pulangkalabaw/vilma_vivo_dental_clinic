@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Record;
+use Validator;
 use Illuminate\Http\Request;
+use App\Record;
+use App\Tooth_Record;
 
 class RecordController extends Controller
 {
@@ -14,7 +16,8 @@ class RecordController extends Controller
      */
     public function index()
     {
-		return view('pages.record.index');
+        $records = Record::with(['tooth'])->get();
+		return view('pages.record.index', compact('records'));
     }
 
     /**
@@ -35,7 +38,42 @@ class RecordController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request->all();
+        $v = Validator::make($request->all(), [
+        	'name' => 'required',
+        	'contact' => 'required',
+        	'address' => 'required',
+        ]);
+
+        if ($v->fails()) return back()->withInput()->withErrors($v->errors());
+        // return $request->except(['_token', 'tooth']);
+
+        $record_id = Record::insertGetId($request->except(['_token', 'tooth']));
+        if (!empty($record_id)) {
+            $tooths = $request->tooth;
+            foreach($tooths as $tooth){
+                if(!empty($tooth['symptom'])){
+                    Tooth_Record::create([
+                        'record_id' => $record_id,
+                        'tooth' => $tooth['tooth'],
+                        'symptom' => $tooth['symptom'],
+                        'description' => $tooth['description'],
+                    ]);
+                }
+            }
+			return back()->with([
+				'notif.style' => 'success',
+				'notif.icon' => 'plus-circle',
+				'notif.message' => 'Added successful!',
+			]);
+		}
+		else {
+			return back()->with([
+				'notif.style' => 'danger',
+				'notif.icon' => 'times-circle',
+				'notif.message' => 'Failed to add',
+			]);
+		}
     }
 
     /**
@@ -44,9 +82,10 @@ class RecordController extends Controller
      * @param  \App\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function show(Record $record)
+    public function show($id)
     {
-        //
+        $record = Record::where('id', $id)->with(['tooth'])->first();
+		return view('pages.record.show', compact('record'));
     }
 
     /**
@@ -55,9 +94,10 @@ class RecordController extends Controller
      * @param  \App\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function edit(Record $record)
+    public function edit($id)
     {
-        //
+        $record = Record::where('id', $id)->with(['tooth'])->first();
+		return view('pages.record.edit', compact('record'));
     }
 
     /**
@@ -67,9 +107,45 @@ class RecordController extends Controller
      * @param  \App\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Record $record)
+    public function update(Request $request, $id)
     {
-        //
+        // return $request->all();
+        $v = Validator::make($request->all(), [
+        	'name' => 'required',
+        	'contact' => 'required',
+        	'address' => 'required',
+        ]);
+
+        if ($v->fails()) return back()->withInput()->withErrors($v->errors());
+
+
+        $record_id = Record::where('id', $id)->update($request->only(['name', 'contact', 'address']));
+        if (!empty($record_id)) {
+            $tooths = $request->tooth;
+            Tooth_Record::where('record_id', $id)->delete();
+            foreach($tooths as $tooth){
+                if(!empty($tooth['symptom'])){
+                    Tooth_Record::create([
+                        'record_id' => $id,
+                        'tooth' => $tooth['tooth'],
+                        'symptom' => $tooth['symptom'],
+                        'description' => $tooth['description'],
+                    ]);
+                }
+            }
+			return back()->with([
+				'notif.style' => 'success',
+				'notif.icon' => 'plus-circle',
+				'notif.message' => 'Added successful!',
+			]);
+		}
+		else {
+			return back()->with([
+				'notif.style' => 'danger',
+				'notif.icon' => 'times-circle',
+				'notif.message' => 'Failed to add',
+			]);
+		}
     }
 
     /**

@@ -13,6 +13,7 @@
 	<!-- Styles -->
 	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('public/assets/css/custom.css') }}" rel="stylesheet">
+	<link href="{{ asset('public/assets/css/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>

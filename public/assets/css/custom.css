@@ -1,4 +1,10 @@
 /* div { position: relative; float: left; } */
+
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
 img { display: block; }
 
 #image-overlay:hover { background: red;  }
@@ -19,19 +25,46 @@ img { display: block; }
     height: 100%;
     opacity: .4;
 }
+.overlay-modal {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    width: 80%;
+    margin-left: 20px !important;
+    margin-right: -40px !important;
+    /* margin:  auto 50px !important; */
+    /* margin-left: auto; */
+    /* margin-right: auto; */
+    height: 100%;
+    opacity: .4;
+}
 
-.overlay.gum_problem{
+.overlay.gum_problem, .overlay-modal.gum_problem{
     background: red;
 }
 
-.overlay.cavities{
+.overlay.cavities, .overlay-modal.cavities{
     background: green;
 }
 
-.overlay.chipped {
+.overlay.chipped, .overlay-modal.chipped {
     background: blue;
 }
 
-.overlay.cracked {
-    background: gray;
+.overlay.cracked, .overlay-modal.cracked {
+    background: #F0AD4E;
+}
+
+
+/* CUSTOM MARGIN */
+.margin-top-0 {
+    margin-top: 0px !important;
+}
+
+/* CUSTSOM TEXT */
+.font-size-20 {
+    font-size: 20px !important;
+}
+.font-size-15 {
+    font-size: 15px !important;
 }

@@ -7,5 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
     protected $table = "records";
-    protected $fillabe = ['name', 'contact', 'address', 'top_position', 'top_image', 'bottom_position', 'bottom_image'];
+    protected $fillabe = ['name', 'contact', 'address'];
+
+    public function tooth() {
+        return $this->hasMany('\App\Tooth_Record', 'record_id', 'id');
+    }
 }

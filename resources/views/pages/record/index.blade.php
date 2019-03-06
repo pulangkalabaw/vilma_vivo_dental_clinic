@@ -93,30 +93,19 @@
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
-							<th>
-								Date
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'quantity', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
-									<span class='fa fa-sort'></span>
-								</a>
-							</th>
-							<th>
-								Time
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'item_date', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
-									<span class='fa fa-sort'></span>
-								</a>
-							</th>
 							<th>Action</th>
 						</tr>
 					</thead>
 					<tbody>
-						{{-- @foreach ($records as $record)
+						@foreach ($records as $record)
 							<tr>
 								<td>{{ $record->name }}</td>
 								<td>{{ $record->contact }}</td>
 								<td>{{ $record->address }}</td>
-								<td>{{ $record->date }}</td>
-								<td>{{ $record->time }}</td>
 								<td>
+									<a href="{{ route('app.record.show', $record->id) }}" class="btn btn-xs btn-warning">
+										<span class="fa fa-eye"></span> show
+									</a>
 									<a href="{{ route('app.record.edit', $record->id) }}" class="btn btn-xs btn-success">
 										<span class="fa fa-edit"></span> Edit
 									</a>
@@ -128,7 +117,7 @@
 									</button>
 								</td>
 							</tr>
-						@endforeach --}}
+						@endforeach
 					</tbody>
 				</table>
 				<br>

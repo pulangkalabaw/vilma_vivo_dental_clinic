@@ -9,9 +9,10 @@
 						<div class="row">
 							<div class="col-md-6">
 								<span class="fa fa-book"></span>
-								Record Management / Show / Edit
+								Record Management / Show
 							</div>
 							<div class="col-md-6 text-right">
+                                <a href="{{ route('app.record.edit', $record->id) }}" class="btn btn-sm btn-info"><span class="fa-pencil"></span> Edit</a>
 								<a href="{{ route('app.record.index') }}" class="btn btn-sm btn-default">
 									<span class="fa fa-book"></span>
 									List of Records
@@ -22,12 +23,11 @@
 					<div class="panel-body">
 
 						@include('includes.notif')
-						<form class="" action="{{ route('app.record.update', $record->id) }}" method="post">
+						<form class="" action="{{ route('app.record.store') }}" method="post">
 							<div class="row">
 								<div class="col-md-6">
 
 									{{ csrf_field() }}
-									{{ method_field('PUT') }}
 									<div class="form-group">
 										<div class="row">
 											<div class="col-md-12">
@@ -36,28 +36,37 @@
 										</div>
 										<div class="row">
 											<div class="col-md-3">
-												Name
+												<h5>Name</h5>
 											</div>
 											<div class="col-md-9">
-												<input type="text" name="name" id="" class="form-control" value="{{ $record->name }}" required>
+                                                <h5>{{ $record['name'] }}</h5>
+                                                <div class="div" hidden>
+                                                    <input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" required>
+                                                </div>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
 										<div class="row">
 											<div class="col-md-3">
-												Contact
+												<h5>Contact</h5>
 											</div>
 											<div class="col-md-9">
-												<input type="text" name="contact" id="" class="form-control" value="{{ $record->contact }}" required>
+                                                <h5>{{ $record['contact'] }}</h5>
+                                                <div class="div" hidden>
+    												<input type="text" name="contact" id="" class="form-control" value="{{ old('contact') }}" required>
+                                                </div>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
 										<div class="row">
 											<div class="col-md-3">
-												Address
+												<h5>Address</h5>
 											</div>
 											<div class="col-md-9">
-												<input type="text" name="address" id="" class="form-control" value="{{ $record->address }}" required>
+                                                <h5>{{ $record['address'] }}</h5>
+                                                <div class="div" hidden>
+    												<input type="text" name="address" id="" class="form-control" value="{{ old('address') }}" required>
+                                                </div>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -122,36 +131,18 @@
 															<tr>
 																@foreach($topTooths as $index => $tooth)
 																<th class="th-container cursor-hand" data-toggle="modal" data-target="#tooth-modal"
-                                                                onclick="getToothInfo('{{ $tooth }}');"
-																{{-- onclick="showToothInfo( --}}
-																{{-- @if(!empty($record->tooth))
+																onclick="showToothInfo(
+																@if(!empty($record->tooth))
 																	@foreach($record->tooth as $tooth_infos)
 																		@if($tooth_infos->tooth == $tooth)
                                                                             '{{ $tooth }}', '{{ $tooth_infos['symptom'] }}', '{{ $tooth_infos['description'] }}'
 																		@endif
 																	@endforeach
 																@endif
-																);" --}}
-                                                                >
+																);">
 																	<input type="hidden" name="tooth[{{ $index }}][tooth]" id="tooth_{{ $tooth }}" value="{{ $tooth }}">
-																	<input type="hidden" name="tooth[{{ $index }}][symptom]" id="tooth_symptom_{{ $tooth }}"
-                                                                    @if(!empty($record->tooth))
-    																	@foreach($record->tooth as $tooth_infos)
-    																		@if($tooth_infos->tooth == $tooth)
-                                                                                value="{{ $tooth_infos->symptom }}"
-    																		@endif
-    																	@endforeach
-    																@endif
-                                                                    >
-																	<input type="hidden" name="tooth[{{ $index }}][description]" id="tooth_description_{{ $tooth }}"
-                                                                    @if(!empty($record->tooth))
-    																	@foreach($record->tooth as $tooth_infos)
-    																		@if($tooth_infos->tooth == $tooth)
-                                                                                value="{{ $tooth_infos->description }}"
-    																		@endif
-    																	@endforeach
-    																@endif
-                                                                    >
+																	<input type="hidden" name="tooth[{{ $index }}][symptom]" id="tooth_symptom_{{ $tooth }}">
+																	<input type="hidden" name="tooth[{{ $index }}][description]" id="tooth_description_{{ $tooth }}">
 																	<img src="{{ asset('public/assets/images/tooths/' . $tooth . '.png')}}" alt="{{ $tooth }}" style="width: 100%">
 																	<div class="overlay
                                                                     @if(!empty($record->tooth))
@@ -171,42 +162,18 @@
 															<tr>
 																@foreach(array_reverse($bottomTooths) as $index => $tooth)
 																<th class="th-container cursor-hand" id="th-container-{{ $tooth }}" data-toggle="modal" data-target="#tooth-modal"
-
-                                                                onclick="getToothInfo('{{ $tooth }}');"
-																{{-- @if(!empty($record->tooth))
-																	@foreach($record->tooth as $tooth_index => $tooth_infos)
+																onclick="showToothInfo(
+																@if(!empty($record->tooth))
+																	@foreach($record->tooth as $tooth_infos)
 																		@if($tooth_infos->tooth == $tooth)
-                                                                            onclick="showToothInfo('{{ $tooth }}', '{{ $tooth_infos['symptom'] }}', '{{ $tooth_infos['description'] }}');"
-                                                                        @else
-                                                                            @if($tooth_index == (count($record->tooth) - 1))
-                                                                                onclick="getToothInfo('{{ $tooth }}')"
-                                                                            @endif
+                                                                            '{{ $tooth }}', '{{ $tooth_infos['symptom'] }}', '{{ $tooth_infos['description'] }}'
 																		@endif
 																	@endforeach
-                                                                @else
-                                                                    onclick="getToothInfo('{{ $tooth }}')"
-																@endif --}}
-
-                                                                >
+																@endif
+																);">
 																	<input type="hidden" name="tooth[{{ $index + 16 }}][tooth]" id="tooth_{{ $tooth }}" value="{{ $tooth }}">
-																	<input type="hidden" name="tooth[{{ $index + 16 }}][symptom]" id="tooth_symptom_{{ $tooth }}"
-                                                                    @if(!empty($record->tooth))
-    																	@foreach($record->tooth as $tooth_infos)
-    																		@if($tooth_infos->tooth == $tooth)
-                                                                                value="{{ $tooth_infos->symptom }}"
-    																		@endif
-    																	@endforeach
-    																@endif
-                                                                    >
-																	<input type="hidden" name="tooth[{{ $index + 16 }}][description]" id="tooth_description_{{ $tooth }}"
-                                                                    @if(!empty($record->tooth))
-    																	@foreach($record->tooth as $tooth_infos)
-    																		@if($tooth_infos->tooth == $tooth)
-                                                                                value="{{ $tooth_infos->description }}"
-    																		@endif
-    																	@endforeach
-    																@endif
-                                                                    >
+																	<input type="hidden" name="tooth[{{ $index + 16 }}][symptom]" id="tooth_symptom_{{ $tooth }}">
+																	<input type="hidden" name="tooth[{{ $index + 16 }}][description]" id="tooth_description_{{ $tooth }}">
 																	<img src="{{ asset('public/assets/images/tooths/' . $tooth . '.png' )}}" alt="{{ $tooth }}" style="width: 100%">
 																	<div class="overlay
                                                                     @if(!empty($record->tooth))
@@ -229,8 +196,8 @@
 	                                    <div class="row">
 	                                        <div class="col-md-3"></div>
 	                                        <div class="col-md-9">
-	                                            <button class="btn btn-primary btn-sm pull-right">
-	                                                <span class="fa fa-plus-circle"></span>
+	                                            <button class="btn btn-success btn-sm pull-right">
+	                                                <span class="fa fa-pencil"></span>
 	                                                Update
 	                                            </button>
 	                                        </div>
@@ -264,44 +231,14 @@
         	</div>
         	<div class="col-sm-8">
         		<div class="form-group">
-        			<label for="">Mark tooth as</label>
-					<div class="radio radio-default">
-						<input id="select_normal" type="radio" name="symptom" value="Normal" checked="checked" id="default-symptom" class="choose-symptom" onclick="changeSymptom('normal');">
-						<label for="select_normal" onclick="changeSymptom('normal');">Normal</label>
-					</div>
-					<div class="radio radio-success">
-						<input id="select_cavities" type="radio" name="symptom" value="Cavities" class="choose-symptom" onclick="changeSymptom('cavities');">
-						<label for="select_cavities" onclick="changeSymptom('cavities');">Cavities</label>
-					</div>
-					<div class="radio radio-info">
-						<input id="select_chipped" type="radio" name="symptom" value="Chipped Tooth" class="choose-symptom" onclick="changeSymptom('chipped');">
-						<label for="select_chipped" onclick="changeSymptom('chipped');">Chipped Tooth</label>
-					</div>
-					<div class="radio radio-warning">
-						<input id="select_cracked" type="radio" name="symptom" value="Cracked Tooth" class="choose-symptom" onclick="changeSymptom('cracked');">
-						<label for="select_cracked" onclick="changeSymptom('cracked');">Cracked Tooth</label>
-					</div>
-					<div class="radio radio-danger">
-						<input id="select_gum" type="radio" name="symptom" value="Gum Problems" class="choose-symptom" onclick="changeSymptom('gum_problem');">
-						<label for="select_gum" onclick="changeSymptom('gum_problem');">Gum Problems</label>
-					</div>
+        			<label>Status: <h5 id="tooth-symptom" class="margin-top-0">Gum Problem</h5></label>
         		</div>
-        	</div>
-        </div>
-		<div class="row">
-			<div class="col-md-12">
 				<div class="form-group">
 					<label>Description:</label>
-					<input type="text" id="tooth-hidden">
-					<input type="text" id="tooth-symptom-hidden">
-					<textarea name="description" rows="3" class="form-control" id="modal-tooth-description"></textarea>
+					<h5 id="tooth-description" class="margin-top-0"></h5>
 				</div>
-			</div>
-		</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button class="btn btn-primary" onclick="getRecord()" data-dismiss="modal" aria-label="Close">Record</button>
+        	</div>
+        </div>
       </div>
     </div>
   </div>
@@ -312,57 +249,19 @@
 		$('#tooth-symptom-hidden').val(symptom);
 		$('#tooth-overlay').attr('class', '').attr('class', 'overlay-modal ' + symptom);
 	}
-	function getToothInfo(tooth){
-        // alert(tooth);
-        // alert($.trim($('#tooth_symptom_' + tooth).val()).length);
-        // console.log($('#tooth_symptom_' + tooth).val() != null || $('#tooth_symptom_' + tooth).val() != "");
-        var thisSymptom = $.trim($('#tooth_symptom_' + tooth).val()).length != 0 ? $.trim($('#tooth_symptom_' + tooth).val()) : 'normal';
-        var thisDescription = $('#tooth_description_' + tooth).val() != null ? $('#tooth_description_' + tooth).val() : 'normal';
-
-        var select_tooth = 'select_normal';
-		if(thisSymptom == 'cavities'){
-			select_tooth = 'select_cavities';
-		} else if(thisSymptom == 'chipped'){
-			select_tooth = 'select_chipped';
-		} else if(thisSymptom == 'cracked'){
-			select_tooth = 'select_cracked';
-		} else if(thisSymptom == 'gum_problem'){
-			select_tooth = 'select_gum';
-		}
-        // alert(thisSymptom);
-        // alert(select_tooth);
-
-        $("#" + select_tooth).prop('checked', true).click();
-		$('#tooth-image').attr('src', '{{ asset('public/assets/images/tooths/' ) }}/' + tooth + '.png');
-		$('#tooth-hidden').val(tooth);
-        $('#modal-tooth-description').val(thisDescription);
-        $('#tooth-symptom-hidden').val(thisSymptom);
-	}
-    function showToothInfo(tooth, symptom = 'normal', description = ''){
-        var select_tooth = 'select_normal';
+    function showToothInfo(tooth, symptom = 'normal', description = 'No description were found'){
+		$thisSymptom = 'N/A';
 		if(symptom == 'cavities'){
-			select_tooth = 'select_cavities';
+			$thisSymptom = 'Cavities';
 		} else if(symptom == 'chipped'){
-			select_tooth = 'select_chipped';
+			$thisSymptom = 'Chipped Tooth';
 		} else if(symptom == 'cracked'){
-			select_tooth = 'select_cracked';
+			$thisSymptom = 'Cracked Tooth';
 		} else if(symptom == 'gum_problem'){
-			select_tooth = 'select_gum';
+			$thisSymptom = 'Gum Problem';
 		}
-        // alert(symptom);
-		$('#tooth-hidden').val(tooth);
-		$('#tooth-symptom-hidden').val(symptom);
-        $('#modal-tooth-description').val(description);
-		$('#tooth-overlay').attr('class', '').attr('class', 'overlay-modal ' + symptom);
-        $("#" + select_tooth).prop('checked', true).click();
-		// $('#tooth-display-' + tooth).attr('class', 'overlay-modal ' + $('#tooth-symptom-hidden').val());
 		$('#tooth-image').attr('src', '{{ asset('public/assets/images/tooths/' ) }}/' + tooth + '.png');
 		$('#tooth-description').text(description);
-		$('#tooth-symptom').text(symptom);
+		$('#tooth-symptom').text($thisSymptom);
     }
-	function getRecord(){
-		$('#tooth-display-' + $('#tooth-hidden').val()).attr('class', 'overlay ' + $('#tooth-symptom-hidden').val());
-		$('#tooth_symptom_' + $('#tooth-hidden').val()).val($('#tooth-symptom-hidden').val());
-		$('#tooth_description_' + $('#tooth-hidden').val()).val($('#modal-tooth-description').val());
-	}
 </script>
