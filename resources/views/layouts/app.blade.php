@@ -15,6 +15,8 @@
 	<link href="{{ asset('public/assets/css/custom.css') }}" rel="stylesheet">
 	<link href="{{ asset('public/assets/css/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" rel="stylesheet">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{{ asset('public/assets/css/font-awesome-animation.css')}}">
+
 </head>
 <body>
 	<div id="app">
@@ -56,7 +58,34 @@
 							<li><a href="{{ route('app.record.index') }}">Record</a></li>
 							<li><a href="{{ route('app.inventory.index') }}">Inventory</a></li>
 							<li><a href="{{ route('app.users.index') }}">Users</a></li>
+							<li class="divider-vertical"></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+										@php
+											$unread = App\Schedule_Notification::where('read_at', 0)->whereDate('created_at', Carbon\Carbon::now()->setTimeZone('Asia/Manila')->toDateString())->get();
+							                $animate = count($unread) != 0 ? 'faa-ring animated' : '';
+										@endphp
+									<span class="fa fa-bell {{ $animate }} font-size-20"></span>
+									@if(count($unread) != 0)
+						                <span class="badge badge-success" style="font-size: 10px !important; background:red; position:relative; top: -10px; left: -7px;">{{ count($unread) }}</span>
+									@endif
+								</a>
 
+								<ul class="dropdown-menu">
+									<li>
+										<li><a href="#">Notifications</a></li>
+										<li class="divider"></li>
+										@foreach($unread as $notification)
+											{{-- {{ dd($notification->schedule_id) }} --}}
+											<li style="background: lightgray !important;"><a href="{{ url('schedule') . '?schedule_id=' . json_encode($notification->id) }}">{{ $notification->message }}</a></li>
+										@endforeach
+										@foreach(App\Schedule_Notification::where('read_at', 1)->whereDate('created_at', Carbon\Carbon::now()->toDateString())->get() as $notification)
+											<li><a href="{{ url('schedule') . '?schedule_id=' . json_encode($notification->id) }}">{{ $notification->message }}</a></li>
+										@endforeach
+									</li>
+								</ul>
+							</li>
+							<li class="divider-vertical"></li>
 							<li class="dropdown">
 								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
 									{{ Auth::user()->name }} <span class="caret"></span>

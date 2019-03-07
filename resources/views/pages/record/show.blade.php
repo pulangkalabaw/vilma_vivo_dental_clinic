@@ -83,7 +83,7 @@
 													<div class="row">
 														<div class="col-md-3">
 															<div class="form-group">
-																<div style="background: red; width: 50px; height: 25px; position: absolute; margin-left: 70px;" >
+																<div style="background: white; border: 1px solid black !important; width: 50px; height: 25px; position: absolute; margin-left: 70px;" >
 																</div>
 																<label class="font-size-15" style="">Normal</label>
 															</div>
@@ -162,11 +162,11 @@
 															<tr>
 																@foreach(array_reverse($bottomTooths) as $index => $tooth)
 																<th class="th-container cursor-hand" id="th-container-{{ $tooth }}" data-toggle="modal" data-target="#tooth-modal"
-																onclick="showToothInfo(
+																onclick="showToothInfo('{{ $tooth }}',
 																@if(!empty($record->tooth))
 																	@foreach($record->tooth as $tooth_infos)
 																		@if($tooth_infos->tooth == $tooth)
-                                                                            '{{ $tooth }}', '{{ $tooth_infos['symptom'] }}', '{{ $tooth_infos['description'] }}'
+                                                                             '{{ $tooth_infos['symptom'] }}', '{{ $tooth_infos['description'] }}'
 																		@endif
 																	@endforeach
 																@endif
@@ -250,6 +250,7 @@
 		$('#tooth-overlay').attr('class', '').attr('class', 'overlay-modal ' + symptom);
 	}
     function showToothInfo(tooth, symptom = 'normal', description = 'No description were found'){
+		alert(tooth);
 		$thisSymptom = 'N/A';
 		if(symptom == 'cavities'){
 			$thisSymptom = 'Cavities';

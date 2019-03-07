@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Validator;
 use Illuminate\Http\Request;
 use App\Schedule;
+use App\Schedule_Notification;
 
 class ScheduleController extends Controller
 {
@@ -13,9 +14,20 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        // return $request->schedule_id;
         $schedules = Schedule::all();
+        if(!empty($request->schedule_id)){
+            // return $request->schedule_id;
+            $get_notification = Schedule_Notification::where('id', $request->schedule_id)->first();
+            if(!empty($get_notification)){
+                $schedules = Schedule::whereIn('id', $get_notification->schedule_id)->get();
+                $get_notification->update(['read_at'=> 1]);
+            }
+        }
+        // return $schedules;
+        // $notification = Schedule_Notification::where('read_at', 0)
 		return view('pages.scheduling.index', compact('schedules'));
     }
 

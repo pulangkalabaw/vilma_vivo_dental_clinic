@@ -39,6 +39,14 @@ img { display: block; }
     opacity: .4;
 }
 
+/* VERTICAL DEVIDER */
+.navbar .divider-vertical {
+    height: 40px;
+    margin: 10px 9px;
+    border-left: 1px solid #f2f2f2;
+    border-right: 1px solid #ffffff;
+}
+
 .overlay.gum_problem, .overlay-modal.gum_problem{
     background: red;
 }
