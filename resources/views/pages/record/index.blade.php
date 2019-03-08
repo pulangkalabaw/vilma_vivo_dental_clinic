@@ -77,19 +77,19 @@
 						<tr>
 							<th>
 								Name
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'item_name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
 							<th>
 								Contact
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'item_name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'contact', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
 							<th>
 								Address
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'item_name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'address', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
@@ -123,10 +123,10 @@
 				<br>
 				<div class="row">
 					<div class="col-md-10">
-						{{-- {{ $inventories->appends(request()->input())->links() }} --}}
+						{{ $records->appends(request()->input())->links() }}
 					</div>
 					<div class="col-md-2 text-right">
-						{{-- Total <b>{{ $inventories_total }}</b> result(s) --}}
+						Total <b>{{ $total_record }}</b> result(s)
 					</div>
 				</div>
 			</div>

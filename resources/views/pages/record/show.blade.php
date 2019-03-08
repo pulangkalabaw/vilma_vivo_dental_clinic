@@ -130,16 +130,16 @@
 														<thead>
 															<tr>
 																@foreach($topTooths as $index => $tooth)
-																<th class="th-container cursor-hand" data-toggle="modal" data-target="#tooth-modal"
-																onclick="showToothInfo(
+																<th class="th-container cursor-hand"
 																@if(!empty($record->tooth))
 																	@foreach($record->tooth as $tooth_infos)
 																		@if($tooth_infos->tooth == $tooth)
-                                                                            '{{ $tooth }}', '{{ $tooth_infos['symptom'] }}', '{{ $tooth_infos['description'] }}'
+																			data-toggle="modal" data-target="#tooth-modal"
+                                                                            onclick="showToothInfo('{{ $tooth }}', '{{ $tooth_infos['symptom'] }}', '{{ $tooth_infos['description'] }}');"
 																		@endif
 																	@endforeach
 																@endif
-																);">
+																>
 																	<input type="hidden" name="tooth[{{ $index }}][tooth]" id="tooth_{{ $tooth }}" value="{{ $tooth }}">
 																	<input type="hidden" name="tooth[{{ $index }}][symptom]" id="tooth_symptom_{{ $tooth }}">
 																	<input type="hidden" name="tooth[{{ $index }}][description]" id="tooth_description_{{ $tooth }}">
@@ -161,16 +161,17 @@
 														<tfoot>
 															<tr>
 																@foreach(array_reverse($bottomTooths) as $index => $tooth)
-																<th class="th-container cursor-hand" id="th-container-{{ $tooth }}" data-toggle="modal" data-target="#tooth-modal"
-																onclick="showToothInfo('{{ $tooth }}',
+																<th class="th-container cursor-hand" id="th-container-{{ $tooth }}"
+
 																@if(!empty($record->tooth))
 																	@foreach($record->tooth as $tooth_infos)
 																		@if($tooth_infos->tooth == $tooth)
-                                                                             '{{ $tooth_infos['symptom'] }}', '{{ $tooth_infos['description'] }}'
+																			data-toggle="modal" data-target="#tooth-modal"
+                                                                            onclick="showToothInfo('{{ $tooth }}','{{ $tooth_infos['symptom'] }}', '{{ $tooth_infos['description'] }}');"
 																		@endif
 																	@endforeach
 																@endif
-																);">
+																>
 																	<input type="hidden" name="tooth[{{ $index + 16 }}][tooth]" id="tooth_{{ $tooth }}" value="{{ $tooth }}">
 																	<input type="hidden" name="tooth[{{ $index + 16 }}][symptom]" id="tooth_symptom_{{ $tooth }}">
 																	<input type="hidden" name="tooth[{{ $index + 16 }}][description]" id="tooth_description_{{ $tooth }}">
@@ -250,7 +251,7 @@
 		$('#tooth-overlay').attr('class', '').attr('class', 'overlay-modal ' + symptom);
 	}
     function showToothInfo(tooth, symptom = 'normal', description = 'No description were found'){
-		alert(tooth);
+		// alert(tooth);
 		$thisSymptom = 'N/A';
 		if(symptom == 'cavities'){
 			$thisSymptom = 'Cavities';
@@ -264,5 +265,6 @@
 		$('#tooth-image').attr('src', '{{ asset('public/assets/images/tooths/' ) }}/' + tooth + '.png');
 		$('#tooth-description').text(description);
 		$('#tooth-symptom').text($thisSymptom);
+		$('#tooth-overlay').attr('class', '').attr('class', 'overlay-modal ' + symptom);
     }
 </script>

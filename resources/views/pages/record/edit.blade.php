@@ -292,8 +292,8 @@
 			<div class="col-md-12">
 				<div class="form-group">
 					<label>Description:</label>
-					<input type="text" id="tooth-hidden">
-					<input type="text" id="tooth-symptom-hidden">
+					<input type="hidden" id="tooth-hidden">
+					<input type="hidden" id="tooth-symptom-hidden">
 					<textarea name="description" rows="3" class="form-control" id="modal-tooth-description"></textarea>
 				</div>
 			</div>

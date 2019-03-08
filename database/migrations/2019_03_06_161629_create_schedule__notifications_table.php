@@ -20,6 +20,8 @@ class CreateScheduleNotificationsTable extends Migration
 			// $table->string('schedule_time');
 			$table->string('status')->default(0);
 			$table->string('message');
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->unsigned();
 			$table->string('read_at')->default(0);
             $table->timestamps();
         });

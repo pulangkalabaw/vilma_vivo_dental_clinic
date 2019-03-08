@@ -14,10 +14,26 @@ class RecordController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $records = Record::with(['tooth'])->get();
-		return view('pages.record.index', compact('records'));
+        $records = new Record();
+        // $records = Record::with(['tooth'])->get();
+        // return $request->all();
+        // return $records = Record::sort($request)->get();
+        if(!empty($request->get('sort_in') && !empty($request->get('sort_by')))) $records = Record::sort($request);
+
+        if(!empty($request->search_string)) $records = Record::search(trim($request->search_string));
+
+        $total = $records->count();
+
+        $total_record = Record::count();
+
+        $records = $records->with('tooth')->paginate((!empty($request->show) ? $request->show : 10));
+		return view('pages.record.index', [
+            'records' => $records,
+            'total_record' => $total_record,
+            'total' => $total,
+        ]);
     }
 
     /**

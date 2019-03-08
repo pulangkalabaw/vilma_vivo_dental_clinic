@@ -16,19 +16,31 @@ class ScheduleController extends Controller
      */
     public function index(Request $request)
     {
-        // return $request->schedule_id;
-        $schedules = Schedule::all();
+        $schedules = new Schedule();
         if(!empty($request->schedule_id)){
-            // return $request->schedule_id;
             $get_notification = Schedule_Notification::where('id', $request->schedule_id)->first();
             if(!empty($get_notification)){
-                $schedules = Schedule::whereIn('id', $get_notification->schedule_id)->get();
+                $schedules = Schedule::whereIn('id', $get_notification->schedule_id);
                 $get_notification->update(['read_at'=> 1]);
             }
         }
-        // return $schedules;
-        // $notification = Schedule_Notification::where('read_at', 0)
-		return view('pages.scheduling.index', compact('schedules'));
+
+        // return $request->all();
+
+        if(!empty($request->get('sort_in') && !empty($request->get('sort_by')))) $schedules = Schedule::sort($request);
+
+        if(!empty($request->search_string)) $schedules = Schedule::search(trim($request->search_string));
+
+        $total = $schedules->count();
+
+        $total_schedule = Schedule::count();
+
+        $schedules = $schedules->paginate((!empty($request->show) ? $request->show : 10));
+		return view('pages.scheduling.index', [
+            'schedules' => $schedules,
+            'total_schedule' => $total_schedule,
+            'total' => $total,
+        ]);
     }
 
     /**

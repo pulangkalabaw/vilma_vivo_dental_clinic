@@ -3,9 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Schedule;
 use Carbon\Carbon;
+use App\Schedule;
 use App\Schedule_Notification;
+use App\User;
 
 class Notification
 {
@@ -32,7 +33,7 @@ class Notification
             // dd($schedule_tomorrow_id = [$schedule_tomorrow[0]->id]);
             $schedule_tomorrow_id[] = $schedule_tomorrow[0]->id;
             $patient_name = $schedule_tomorrow[0]->name;
-            $message_tomorrow = $patient_name . " have a scheduled tomorrow at " . $schedule_tomorrow[0]->time . ".";
+            $message_tomorrow = $patient_name . " have a scheduled tomorrow at " . date('h:i A', strtotime($schedule_tomorrow[0]->time)) . ".";
         }
         else if(count($schedule_tomorrow) >= 1) {
             foreach($schedule_tomorrow as $tomorrow){
@@ -46,10 +47,14 @@ class Notification
         // dd($check_tomorrow_notifcation);s
         if(empty($check_tomorrow_notifcation)){
             if(count($schedule_tomorrow) != 0){
-                Schedule_Notification::create([
-                    'schedule_id' => $schedule_tomorrow_id,
-                    'message' => $message_tomorrow,
-                ]);
+
+                foreach(User::get() as $user){
+                    Schedule_Notification::create([
+                        'schedule_id' => $schedule_tomorrow_id,
+                        'message' => $message_tomorrow,
+                        'user_id' => $user->id,
+                    ]);
+                }
             }
         }
         // dd($schedule_tomorrow
@@ -79,11 +84,14 @@ class Notification
         // dd($check_today_notifcation);
         if(empty($check_today_notifcation)){
             // if(count($schedule_today) != 0 || count($schedule_today) >= 0){
-                Schedule_Notification::create([
-                    'schedule_id' => $schedule_today_id,
-                    'message' => $message_today,
-                    'status' => 1,
-                ]);
+                foreach(User::get() as $user){
+                    Schedule_Notification::create([
+                        'schedule_id' => $schedule_today_id,
+                        'message' => $message_today,
+                        'status' => 1,
+                        'user_id' => $user->id,
+                    ]);
+                }
             // }
         }
 

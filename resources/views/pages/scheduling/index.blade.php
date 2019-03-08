@@ -62,7 +62,7 @@
 					<div class="col-md-5 col-xs-5">
 						<form action="{{ request()->fullUrl() }}" method="GET">
 							<div class="input-group">
-								<input type="search" name="search_string" id="" value="{{ !empty(request()->get('search_string')) ? request()->get('search_string') : '' }}" class="form-control" placeholder="Search for Name, Email, or address">
+								<input type="search" name="search_string" id="" value="{{ !empty(request()->get('search_string')) ? request()->get('search_string') : '' }}" class="form-control" placeholder="Search for Name, Contact, or address">
 								<span class="input-group-btn">
 									<button class="btn btn-primary"><span class='fa fa-search'></span> </button>
 								</span>
@@ -77,31 +77,31 @@
 						<tr>
 							<th>
 								Name
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'item_name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
 							<th>
 								Contact
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'item_name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'contact', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
 							<th>
 								Address
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'item_name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'address', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
 							<th>
 								Date
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'quantity', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'date', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
 							<th>
 								Time
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'item_date', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'time', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
@@ -114,8 +114,16 @@
 								<td>{{ $schedule->name }}</td>
 								<td>{{ $schedule->contact }}</td>
 								<td>{{ $schedule->address }}</td>
-								<td>{{ $schedule->date }}</td>
-								<td>{{ $schedule->time }}</td>
+								@php
+									$scheduled_date = $schedule->date;
+									if($scheduled_date == Carbon\Carbon::now()->toDateString()){
+										$scheduled_date = "Today";
+									} else if($scheduled_date == Carbon\Carbon::now()->addDay(1)->toDateString()){
+										$scheduled_date = "Tomorrow";
+									}
+								@endphp
+								<td>{{ $scheduled_date }}</td>
+								<td>{{ date('h:i A', strtotime($schedule->time)) }}</td>
 								<td>
 									<a href="{{ route('app.schedule.edit', $schedule->id) }}" class="btn btn-xs btn-success">
 										<span class="fa fa-edit"></span> Edit
@@ -134,10 +142,10 @@
 				<br>
 				<div class="row">
 					<div class="col-md-10">
-						{{-- {{ $inventories->appends(request()->input())->links() }} --}}
+						{{ $schedules->appends(request()->input())->links() }}
 					</div>
 					<div class="col-md-2 text-right">
-						{{-- Total <b>{{ $inventories_total }}</b> result(s) --}}
+						Total <b>{{ $total_schedule }}</b> result(s)
 					</div>
 				</div>
 			</div>
