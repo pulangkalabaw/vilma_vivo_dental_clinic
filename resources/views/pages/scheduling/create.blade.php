@@ -73,7 +73,8 @@
 												Date
 											</div>
 											<div class="col-md-9">
-												<input type="date" name="date" id="" class="form-control" value="{{ old('date') }}" required>
+												<input type="date" name="date" id="scheduleDate" class="form-control" value="{{ old('date') }}" min="{{ Carbon\Carbon::now()->toDateString() }}" required onchange="checkScheduleCount()">
+												<label style="color: red;" hidden id="date_message">You can only add 5 schedules on every date</label>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -91,7 +92,8 @@
 									<div class="row">
 										<div class="col-md-3"></div>
 										<div class="col-md-9">
-											<button class="btn btn-primary btn-sm pull-right">
+											{{-- <button class="btn btn-primary btn-sm pull-right" {{ $total_today >= 5 ? 'disabled' : '' }}> --}}
+											<button class="btn btn-primary btn-sm pull-right" id="schedule_submit">
 												<span class="fa fa-plus-circle"></span>
 												Submit
 											</button>
@@ -107,3 +109,23 @@
 		</div>
 	</div>
 @endsection
+
+<script>
+	function checkScheduleCount(){
+		// alert('{{ url('schedule/check-date') }}');
+		$.ajax({
+			url: '{{ url('schedule/check-date') }}?date=' + $('#scheduleDate').val(),
+			method: 'GET',
+			success: function(response){
+				// alert(response);
+				if(response >= 5){
+					$('#schedule_submit').attr('disabled', true);
+					$('#date_message').show();
+				} else {
+					$('#schedule_submit').attr('disabled', false);
+					$('#date_message').hide();
+				}
+			}
+		});
+	}
+</script>

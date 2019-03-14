@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use DateTime;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Schedule;
 use App\Schedule_Notification;
 
@@ -35,11 +37,14 @@ class ScheduleController extends Controller
 
         $total_schedule = Schedule::count();
 
-        $schedules = $schedules->paginate((!empty($request->show) ? $request->show : 10));
+        $total_schedule_today = Schedule::whereDate('date', Carbon::now()->toDateString())->count();
+
+        $schedules = $schedules->orderBy('id', 'desc')->paginate((!empty($request->show) ? $request->show : 10));
 		return view('pages.scheduling.index', [
             'schedules' => $schedules,
             'total_schedule' => $total_schedule,
             'total' => $total,
+            'total_today' => $total_schedule_today,
         ]);
     }
 
@@ -50,7 +55,8 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-		return view('pages.scheduling.create');
+        $total_schedule_today = Schedule::whereDate('date', Carbon::now()->toDateString())->count();
+		return view('pages.scheduling.create', ['total_today' => $total_schedule_today]);
     }
 
     /**
@@ -71,7 +77,7 @@ class ScheduleController extends Controller
 
 		if ($v->fails()) return back()->withInput()->withErrors($v->errors());
 
-        if (Schedule::insert($request->except(['_token']))) {
+        if (Schedule::create($request->except(['_token']))) {
 			return back()->with([
 				'notif.style' => 'success',
 				'notif.icon' => 'plus-circle',
@@ -153,7 +159,6 @@ class ScheduleController extends Controller
      */
     public function destroy($id)
     {
-        // return $id;
         if (Schedule::findOrFail($id)->delete()) {
             return back()->with([
                 'notif.style' => 'success',
@@ -167,6 +172,17 @@ class ScheduleController extends Controller
                 'notif.icon' => 'times-circle',
                 'notif.message' => 'Failed to delete - Please try again',
             ]);
+        }
+    }
+
+    public function checkScheduleDate(Request $request){
+        // return $request->all();
+
+        // CHECK IF FETCHED DATA IS REAL DATE
+        // return DateTime::createFromFormat('Y-m-d H:i:s', $request->date);
+        // dd(DateTime::createFromFormat('Y-m-d', $request->date));
+        if(DateTime::createFromFormat('Y-m-d', $request->date) !== FALSE){
+            return Schedule::whereDate('date', $request->date)->count();
         }
     }
 }

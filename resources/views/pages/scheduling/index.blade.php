@@ -12,10 +12,11 @@
 								Scheduling Management
 							</div>
 							<div class="col-md-6 text-right">
-								<a href="{{ route('app.schedule.create') }}" class="btn btn-sm btn-primary">
+								{{-- <button onclick="window.location = '{{ route('app.schedule.create') }}' " {{ $total_today >= 5 ? 'disabled' : '' }} class="btn btn-sm btn-primary"> --}}
+								<button onclick="window.location = '{{ route('app.schedule.create') }}' " class="btn btn-sm btn-primary">
 									<span class="fa fa-plus-circle"></span>
 									Add new schedule
-								</a>
+								</button>
 							</div>
 						</div>
 					</div>
@@ -128,7 +129,7 @@
 									<a href="{{ route('app.schedule.edit', $schedule->id) }}" class="btn btn-xs btn-success">
 										<span class="fa fa-edit"></span> Edit
 									</a>
-									<button class="btn btn-xs btn-danger" for="submit-form" tabindex="0" form="{{ $schedule->id }}myform"><span class='fa fa-trash'></span> Delete
+									<button class="btn btn-xs btn-danger" for="submit-form" tabindex="0" form="{{ $schedule->id }}myform"><span class='fa fa-trash'></span> Cancel
 										<form class="delete" method="POST" action="{{ route('app.schedule.destroy', $schedule->id) }}" id="{{ $schedule->id }}myform">
 											{{ method_field('DELETE') }}
 											{{ csrf_field() }}

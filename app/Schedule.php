@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
     protected $table = "schedules";
-    protected $fillabe = ['name', 'contact', 'address', 'date', 'time'];
+    protected $fillable = ['name', 'contact', 'address', 'date', 'time'];
 
     public function scopeSearch ($query, $value) {
         $val = trim($value);
