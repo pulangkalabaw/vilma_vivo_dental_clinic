@@ -18,7 +18,7 @@ class CreateToothRecordsTable extends Migration
 			$table->string('record_id');
             $table->string('tooth');
             $table->string('symptom');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

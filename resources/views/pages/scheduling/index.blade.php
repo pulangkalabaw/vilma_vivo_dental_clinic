@@ -77,6 +77,12 @@
 					<thead>
 						<tr>
 							<th>
+								Tracking No
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'tracking_no', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+									<span class='fa fa-sort'></span>
+								</a>
+							</th>
+							<th>
 								Name
 								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
@@ -112,6 +118,7 @@
 					<tbody>
 						@foreach ($schedules as $schedule)
 							<tr>
+								<td>{{ $schedule->tracking_no }}</td>
 								<td>{{ $schedule->name }}</td>
 								<td>{{ $schedule->contact }}</td>
 								<td>{{ $schedule->address }}</td>

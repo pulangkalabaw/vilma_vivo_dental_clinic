@@ -35,6 +35,15 @@
 										</div>
 										<div class="row">
 											<div class="col-md-3">
+												Tracking Number
+											</div>
+											<div class="col-md-9">
+												<input type="text" name="tracking_no" id="" class="form-control" value="{{ str_random(10) }}" readonly >
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
+										<div class="row">
+											<div class="col-md-3">
 												Name
 											</div>
 											<div class="col-md-9">
