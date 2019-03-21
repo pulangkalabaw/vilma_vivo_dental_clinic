@@ -26,5 +26,6 @@ Route::group(['middleware' => ['auth', 'notification'], 'as' => 'app.'], functio
     Route::resource('inventory', 'InventoryController');
 	Route::get('schedule/check-date', 'ScheduleController@checkScheduleDate')->name('check-date');
     Route::resource('schedule', 'ScheduleController');
+    Route::get('record/get-tracking-no/{tracking_no}', 'RecordController@getTrackingNo');
     Route::resource('record', 'RecordController');
 });

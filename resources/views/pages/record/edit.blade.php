@@ -64,6 +64,34 @@
 									</div>
 								</div>
 							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<h4>Tooth History</h4>
+										<table id="example" class="table table-bordered">
+											<thead>
+												<tr>
+													<th>Tooth</th>
+													<th>Symptom</th>
+													<th>Description</th>
+													<th class="text-center">Date</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach($tooth_activity as $activity)
+												<tr>
+													<td>{{ $activity['tooth'] }}</td>
+													<td>{{ $activity['symptom'] }}</td>
+													<td>{{ $activity['description'] }}</td>
+													<td class="text-center">{{ Carbon\Carbon::parse($activity['created-at'])->toDateString('Y') }}</td>
+												</tr>
+												@endforeach
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
 	                        <div class="row">
 	                            <div class="col-md-12">
 	                                <div class="form-group">
@@ -266,8 +294,8 @@
         		<div class="form-group">
         			<label for="">Mark tooth as</label>
 					<div class="radio radio-default">
-						<input id="select_normal" type="radio" name="symptom" value="Normal" checked="checked" id="default-symptom" class="choose-symptom" onclick="changeSymptom('normal');">
-						<label for="select_normal" onclick="changeSymptom('normal');">Normal</label>
+						<input id="select_normal" type="radio" name="symptom" value="Normal" checked="checked" id="default-symptom" class="choose-symptom" onclick="changeSymptom('normal'); $('#modal-tooth-description').val('');">
+						<label for="select_normal" onclick="changeSymptom('normal'); $('#modal-tooth-description').val(''); ">Normal</label>
 					</div>
 					<div class="radio radio-success">
 						<input id="select_cavities" type="radio" name="symptom" value="Cavities" class="choose-symptom" onclick="changeSymptom('cavities');">

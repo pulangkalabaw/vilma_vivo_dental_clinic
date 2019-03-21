@@ -67,7 +67,9 @@ class ScheduleController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request->all();
 		$v = Validator::make($request->all(), [
+            'tracking_no' => 'required',
 			'name' => 'required|string|max:255',
 			'contact' => 'required',
 			'address' => 'required|string|max:255',
@@ -77,6 +79,35 @@ class ScheduleController extends Controller
 
 		if ($v->fails()) return back()->withInput()->withErrors($v->errors());
 
+        $time = Carbon::parse($request->time)->toTimeString();
+
+        // CHECK IF TIME IS ALREADY PASSED THE CURRENT TIME
+        $time_now = Carbon::now()->toTimeString();
+        if($time <= $time_now){
+			return back()->withInput()->with([
+				'notif.style' => 'danger',
+				'notif.icon' => 'times-circle',
+				'notif.message' => "The selected time is already passed.",
+			]);
+        }
+
+        // CHECK IF TIME DOES'T HAVE A CONFLICT
+        $date = Carbon::parse($request->date)->toDateString();
+        $schedules = Schedule::whereDate('date', $date)->get();
+        foreach($schedules as $schedule){
+            $schedule_time = Carbon::parse($request->time)->toTimeString();
+            $one_hour_before = Carbon::parse($request->time)->subHour(1)->toTimeString();
+            $one_hour_after = Carbon::parse($request->time)->addHour(1)->toTimeString();
+            if($time >= $one_hour_before || $time <= $one_hour_after){
+    			return back()->withInput()->with([
+    				'notif.style' => 'danger',
+    				'notif.icon' => 'times-circle',
+    				'notif.message' => 'Invalid Time! There is an existing schedule on '. $schedule_time . '. Make sure the time is before 1 hour or after 1 hour of the current schedule',
+    			]);
+            }
+            return $schedule->time;
+        }
+
         if (Schedule::create($request->except(['_token']))) {
 			return back()->with([
 				'notif.style' => 'success',
@@ -85,7 +116,7 @@ class ScheduleController extends Controller
 			]);
 		}
 		else {
-			return back()->with([
+			return back()->withInput()->with([
 				'notif.style' => 'danger',
 				'notif.icon' => 'times-circle',
 				'notif.message' => 'Failed to add',

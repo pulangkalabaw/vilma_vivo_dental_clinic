@@ -73,6 +73,33 @@
 									</div>
 								</div>
 							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<h4>Tooth History</h4>
+										<table id="example" class="table table-bordered">
+											<thead>
+												<tr>
+													<th>Tooth</th>
+													<th>Symptom</th>
+													<th>Description</th>
+													<th class="text-center">Date</th>
+												</tr>
+											</thead>
+											<tbody>
+												@foreach($tooth_activity as $activity)
+												<tr>
+													<td>{{ $activity['tooth'] }}</td>
+													<td>{{ $activity['symptom'] }}</td>
+													<td>{{ $activity['description'] }}</td>
+													<td class="text-center">{{ Carbon\Carbon::parse($activity['created-at'])->toDateString('Y') }}</td>
+												</tr>
+												@endforeach
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
 	                        <div class="row">
 	                            <div class="col-md-12">
 	                                <div class="form-group">
@@ -194,16 +221,6 @@
 												</center>
 	                                        </div>
 	                                    </div>
-	                                    <div class="row">
-	                                        <div class="col-md-3"></div>
-	                                        <div class="col-md-9">
-	                                            <button class="btn btn-success btn-sm pull-right">
-	                                                <span class="fa fa-pencil"></span>
-	                                                Update
-	                                            </button>
-	                                        </div>
-	                                    </div>
-	                                    <div class="clearfix"></div><br />
 	                                </div>
 	                            </div>
 	                        </div>
@@ -214,38 +231,41 @@
 		</div>
 	</div>
 	<!-- Modal -->
-<div class="modal fade" id="tooth-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tooth Description</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row vertical-align">
-        	<div class="col-sm-4">
-				<center>
-					<img src="" alt="" id="tooth-image">
-					<div class="overlay-modal" id="tooth-overlay">
-					</div>
-				</center>
-        	</div>
-        	<div class="col-sm-8">
-        		<div class="form-group">
-        			<label>Status: <h5 id="tooth-symptom" class="margin-top-0">Gum Problem</h5></label>
-        		</div>
-				<div class="form-group">
-					<label>Description:</label>
-					<h5 id="tooth-description" class="margin-top-0"></h5>
+	<div class="modal fade" id="tooth-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Tooth Description</h4>
 				</div>
-        	</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+				<div class="modal-body">
+					<div class="row vertical-align">
+						<div class="col-sm-4">
+							<center>
+								<img src="" alt="" id="tooth-image">
+								<div class="overlay-modal" id="tooth-overlay">
+								</div>
+							</center>
+						</div>
+						<div class="col-sm-8">
+							<div class="form-group">
+								<label>Status: <h5 id="tooth-symptom" class="margin-top-0">Gum Problem</h5></label>
+							</div>
+							<div class="form-group">
+								<label>Description:</label>
+								<h5 id="tooth-description" class="margin-top-0"></h5>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 @endsection
 <script>
+	$(document).ready(function() {
+	    $('#example').DataTable();
+	} );
 	function changeSymptom(symptom){
 		$('#tooth-symptom-hidden').val(symptom);
 		$('#tooth-overlay').attr('class', '').attr('class', 'overlay-modal ' + symptom);

@@ -80,10 +80,12 @@ class Notification
         }
         // dd($schedule_today_id);
         // dd($message_today);
-        $check_today_notifcation = Schedule_Notification::where('status', 1)->where('schedule_id', json_encode($schedule_today_id))->whereDate('created_at', Carbon::now()->setTimeZone('Asia/Manila')->toDateString())->first();
-        // dd($check_today_notifcation);
-        if(empty($check_today_notifcation)){
-            // if(count($schedule_today) != 0 || count($schedule_today) >= 0){
+        // dd(count($schedule_today));
+        if(count($schedule_today) != 0){
+            $check_today_notifcation = Schedule_Notification::where('status', 1)->where('schedule_id', json_encode($schedule_today_id))->whereDate('created_at', Carbon::now()->setTimeZone('Asia/Manila')->toDateString())->first();
+            // dd($check_today_notifcation);
+            if(empty($check_today_notifcation)){
+                // if(count($schedule_today) != 0 || count($schedule_today) >= 0){
                 foreach(User::get() as $user){
                     Schedule_Notification::create([
                         'schedule_id' => $schedule_today_id,
@@ -92,7 +94,8 @@ class Notification
                         'user_id' => $user->id,
                     ]);
                 }
-            // }
+                // }
+            }
         }
 
 

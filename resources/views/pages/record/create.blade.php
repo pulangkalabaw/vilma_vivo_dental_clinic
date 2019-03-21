@@ -33,12 +33,49 @@
 												<h4>Customer Information</h4>
 											</div>
 										</div>
+
+										<div class="row">
+											<div class="col-md-3">
+											</div>
+											<div class="col-md-9">
+												<div class="form-group">
+													<div class="row">
+														<div class="col-md-3">
+															<div class="radio radio-default">
+																<input id="chooseWalkin" type="radio" name="choose-option" value="0" checked="checked" onclick="$('#tracking_no_container').hide(); $('input').val('');">
+																<label for="chooseWalkin" onclick="$('#tracking_no_container').hide(); $('#trackingNo').val(''); $('#trackMessage').hide();">Walk-In</label>
+															</div>
+														</div>
+														<div class="col-md-9">
+															<div class="radio radio-default">
+																<input id="chooseExisting" type="radio" name="choose-option" value="1" onclick="$('#tracking_no_container').show();">
+																<label for="chooseExisting" onclick="$('#tracking_no_container').show();">Existing</label>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="form-group">
+												</div>
+											</div>
+										</div>
+
+										<div class="row" id="tracking_no_container" hidden>
+											<div class="col-md-3">
+												<label class="pull-right">Tracking No</label>
+											</div>
+											<div class="col-md-5">
+												<input type="text" id="trackingNo" name="trackingNo" class="form-control" value="{{ old('name') }}">
+												<button type="button" class="btn btn-sm btn-info" onclick="searchTrackingNo()">Search</button>
+												<label class="text-danger" id="trackMessage" hidden>Invalid Tracking No!</label>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
 										<div class="row">
 											<div class="col-md-3">
 												Name
 											</div>
 											<div class="col-md-9">
-												<input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" required>
+												<input type="text" name="name" id="name" class="form-control" value="{{ old('name') }}" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -47,7 +84,7 @@
 												Contact
 											</div>
 											<div class="col-md-9">
-												<input type="text" name="contact" id="" class="form-control" value="{{ old('contact') }}" required>
+												<input type="text" name="contact" id="contact" class="form-control" value="{{ old('contact') }}" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -56,7 +93,7 @@
 												Address
 											</div>
 											<div class="col-md-9">
-												<input type="text" name="address" id="" class="form-control" value="{{ old('address') }}" required>
+												<input type="text" name="address" id="address" class="form-control" value="{{ old('address') }}" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -169,68 +206,87 @@
 		</div>
 	</div>
 	<!-- Modal -->
-<div class="modal fade" id="tooth-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Tooth Description</h4>
-      </div>
-      <div class="modal-body">
-        <div class="row vertical-align">
-        	<div class="col-sm-4">
-				<center>
-					<img src="" alt="" id="tooth-image">
-					<div class="overlay-modal" id="tooth-overlay">
+	<div class="modal fade" id="tooth-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+					<h4 class="modal-title" id="myModalLabel">Tooth Description</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row vertical-align">
+						<div class="col-sm-4">
+							<center>
+								<img src="" alt="" id="tooth-image">
+								<div class="overlay-modal" id="tooth-overlay">
+								</div>
+							</center>
+						</div>
+						<div class="col-sm-8">
+							<div class="form-group">
+								<label for="">Mark tooth as</label>
+								<div class="radio radio-default">
+									<input id="select_normal" type="radio" name="symptom" value="Normal" checked="checked" id="default-symptom" class="choose-symptom" onclick="changeSymptom('normal'); $('#modal-tooth-description').val('');">
+									<label for="select_normal" onclick="changeSymptom('normal'); $('#modal-tooth-description').val('');">Normal</label>
+								</div>
+								<div class="radio radio-success">
+									<input id="select_cavities" type="radio" name="symptom" value="Cavities" class="choose-symptom" onclick="changeSymptom('cavities');">
+									<label for="select_cavities" onclick="changeSymptom('cavities');">Cavities</label>
+								</div>
+								<div class="radio radio-info">
+									<input id="select_chipped" type="radio" name="symptom" value="Chipped Tooth" class="choose-symptom" onclick="changeSymptom('chipped');">
+									<label for="select_chipped" onclick="changeSymptom('chipped');">Chipped Tooth</label>
+								</div>
+								<div class="radio radio-warning">
+									<input id="select_cracked" type="radio" name="symptom" value="Cracked Tooth" class="choose-symptom" onclick="changeSymptom('cracked');">
+									<label for="select_cracked" onclick="changeSymptom('cracked');">Cracked Tooth</label>
+								</div>
+								<div class="radio radio-danger">
+									<input id="select_gum" type="radio" name="symptom" value="Gum Problems" class="choose-symptom" onclick="changeSymptom('gum_problem');">
+									<label for="select_gum" onclick="changeSymptom('gum_problem');">Gum Problems</label>
+								</div>
+							</div>
+						</div>
 					</div>
-				</center>
-        	</div>
-        	<div class="col-sm-8">
-        		<div class="form-group">
-        			<label for="">Mark tooth as</label>
-					<div class="radio radio-default">
-						<input id="select_normal" type="radio" name="symptom" value="Normal" checked="checked" id="default-symptom" class="choose-symptom" onclick="changeSymptom('normal');">
-						<label for="select_normal" onclick="changeSymptom('normal');">Normal</label>
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<label>Description:</label>
+								<input type="hidden" id="tooth-hidden">
+								<input type="hidden" id="tooth-symptom-hidden">
+								<textarea name="description" rows="3" class="form-control" id="modal-tooth-description"></textarea>
+							</div>
+						</div>
 					</div>
-					<div class="radio radio-success">
-						<input id="select_cavities" type="radio" name="symptom" value="Cavities" class="choose-symptom" onclick="changeSymptom('cavities');">
-						<label for="select_cavities" onclick="changeSymptom('cavities');">Cavities</label>
-					</div>
-					<div class="radio radio-info">
-						<input id="select_chipped" type="radio" name="symptom" value="Chipped Tooth" class="choose-symptom" onclick="changeSymptom('chipped');">
-						<label for="select_chipped" onclick="changeSymptom('chipped');">Chipped Tooth</label>
-					</div>
-					<div class="radio radio-warning">
-						<input id="select_cracked" type="radio" name="symptom" value="Cracked Tooth" class="choose-symptom" onclick="changeSymptom('cracked');">
-						<label for="select_cracked" onclick="changeSymptom('cracked');">Cracked Tooth</label>
-					</div>
-					<div class="radio radio-danger">
-						<input id="select_gum" type="radio" name="symptom" value="Gum Problems" class="choose-symptom" onclick="changeSymptom('gum_problem');">
-						<label for="select_gum" onclick="changeSymptom('gum_problem');">Gum Problems</label>
-					</div>
-        		</div>
-        	</div>
-        </div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="form-group">
-					<label>Description:</label>
-					<input type="hidden" id="tooth-hidden">
-					<input type="hidden" id="tooth-symptom-hidden">
-					<textarea name="description" rows="3" class="form-control" id="modal-tooth-description"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button class="btn btn-primary" onclick="getRecord()" data-dismiss="modal" aria-label="Close">Record</button>
 				</div>
 			</div>
 		</div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button class="btn btn-primary" onclick="getRecord()" data-dismiss="modal" aria-label="Close">Record</button>
-      </div>
-    </div>
-  </div>
-</div>
+	</div>
 @endsection
 <script>
+	function searchTrackingNo(){
+		tracking_no = $('#trackingNo').val();
+		$.ajax({
+			url: '{{ url('record/get-tracking-no/') }}/' + tracking_no,
+			method: 'GET',
+			success:function(response){
+				// console.log(response);
+				if(response != "invalid"){
+					$('#name').val(response.name);
+					$('#address').val(response.address);
+					$('#contact').val(response.contact);
+					$('#trackMessage').hide();
+				} else {
+					$('#trackMessage').show();
+				}
+			}
+		});
+	}
+
 	function changeSymptom(symptom){
 		$('#tooth-symptom-hidden').val(symptom);
 		$('#tooth-overlay').attr('class', '').attr('class', 'overlay-modal ' + symptom);
