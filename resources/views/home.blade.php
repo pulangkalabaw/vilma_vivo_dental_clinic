@@ -17,6 +17,51 @@
 					</div>
 				</div>
 			</div>
+			<div class="col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Scheduled Today
+					</div>
+
+					<div class="panel-body text-left">
+						<h1>
+							<span class="fa fa-book"></span>
+							{{ 	$sched_today }}
+						</h1>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Scheduled Pending
+					</div>
+
+					<div class="panel-body text-left">
+						<h1>
+							<span class="fa fa-book"></span>
+							{{ 	$sched_pending }}
+						</h1>
+						<small>
+							(including today's)
+						</small>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						All Records
+					</div>
+
+					<div class="panel-body text-left">
+						<h1>
+							<span class="fa fa-book"></span>
+							{{ 	$record_count }}
+						</h1>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div class="clearfix"></div><br />
 

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Carbon\Carbon;
+use App\Schedule;
 use App\User;
+use App\Record;
 use App\Inventory;
 use Illuminate\Http\Request;
 
@@ -33,9 +37,21 @@ class HomeController extends Controller
             return $r;
         });
 
+
+		// Scheduled today
+		$today_sched = Schedule::whereDate('date', '=', Carbon::today()->toDateString())->count();
+		$pending = Schedule::whereDate('date', '>=',  Carbon::today()->toDateString())->count();
+
+
+		// Record
+		$record_count = Record::count();
+
         return view('home', [
 			'count_user_roles' => $count_user_roles,
 			'inventory_count' => $inventory,
+			'sched_today' => $today_sched,
+			'sched_pending' => $pending,
+			'record_count' => $record_count,
 		]);
     }
 }
