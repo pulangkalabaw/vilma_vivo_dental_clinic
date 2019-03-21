@@ -73,7 +73,7 @@ class RecordController extends Controller
             $tooths = $request->tooth;
             foreach($tooths as $tooth){
                 if(!empty($tooth['symptom'])){
-                    if($tooth['symptom'] == 'normal' && !empty($tooth['description'])){
+                    if($tooth['symptom'] != 'normal'){
                         Tooth_Record::create([
                             'record_id' => $record_id,
                             'tooth' => $tooth['tooth'],
@@ -87,6 +87,22 @@ class RecordController extends Controller
                             'symptom' => $tooth['symptom'],
                             'description' => $tooth['description'],
                         ]);
+                    } else {
+                        if(!empty($tooths['description'])){
+                            Tooth_Record::create([
+                                'record_id' => $record_id,
+                                'tooth' => $tooth['tooth'],
+                                'symptom' => $tooth['symptom'],
+                                'description' => $tooth['description'],
+                            ]);
+
+                            Tooth_Activity::create([
+                                'record_id' => $record_id,
+                                'tooth' => $tooth['tooth'],
+                                'symptom' => $tooth['symptom'],
+                                'description' => $tooth['description'],
+                            ]);
+                        }
                     }
                 }
             }
@@ -177,13 +193,22 @@ class RecordController extends Controller
             Tooth_Record::where('record_id', $id)->delete();
             foreach($tooths as $tooth){
                 if(!empty($tooth['symptom'])){
-                    if($tooth['symptom'] == 'normal' && !empty($tooth['description'])){
+                    if($tooth['symptom'] != 'normal'){
                         Tooth_Record::create([
                             'record_id' => $id,
                             'tooth' => $tooth['tooth'],
                             'symptom' => $tooth['symptom'],
                             'description' => $tooth['description'],
                         ]);
+                    } else {
+                        if(!empty($tooth['description'])){
+                            Tooth_Record::create([
+                                'record_id' => $id,
+                                'tooth' => $tooth['tooth'],
+                                'symptom' => $tooth['symptom'],
+                                'description' => $tooth['description'],
+                            ]);
+                        }
                     }
                 }
             }
@@ -208,9 +233,24 @@ class RecordController extends Controller
      * @param  \App\Record  $record
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Record $record)
+    public function destroy($id)
     {
-        //
+        if (Record::findOrFail($id)->delete()) {
+            Tooth_Activity::where('record_id', $id)->delete();
+            Tooth_Record::where('record_id', $id)->delete();
+            return back()->with([
+                'notif.style' => 'success',
+                'notif.icon' => 'plus-circle',
+                'notif.message' => 'Delete successful',
+            ]);
+        }
+        else {
+            return back()->with([
+                'notif.style' => 'danger',
+                'notif.icon' => 'times-circle',
+                'notif.message' => 'Failed to delete - Please try again',
+            ]);
+        }
     }
 
     public function getTrackingNo($trackingNo){
