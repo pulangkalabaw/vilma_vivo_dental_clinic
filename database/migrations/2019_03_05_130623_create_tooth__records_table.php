@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSchedulesTable extends Migration
+class CreateToothRecordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateSchedulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::create('tooth_records', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('contact');
-            $table->string('address');
-            $table->date('date');
-            $table->time('time');
+			$table->string('record_id');
+            $table->string('tooth');
+            $table->string('symptom');
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -31,6 +30,6 @@ class CreateSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('tooth__records');
     }
 }

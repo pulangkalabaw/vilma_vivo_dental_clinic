@@ -19,10 +19,12 @@ Auth::routes();
 
 
 
-Route::group(['middleware' => 'auth', 'as' => 'app.'], function() {
+Route::group(['middleware' => ['auth', 'notification'], 'as' => 'app.'], function() {
 
 	Route::get('/home', 'HomeController@index')->name('home'); // DASHBOARD
     Route::resource('users', 'UserController');
     Route::resource('inventory', 'InventoryController');
+	Route::get('schedule/check-date', 'ScheduleController@checkScheduleDate')->name('check-date');
     Route::resource('schedule', 'ScheduleController');
+    Route::resource('record', 'RecordController');
 });

@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Validator;
+use DateTime;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Schedule;
+use App\Schedule_Notification;
 
 class ScheduleController extends Controller
 {
@@ -13,10 +16,36 @@ class ScheduleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $schedules = Schedule::all();
-		return view('pages.scheduling.index', compact('schedules'));
+        $schedules = new Schedule();
+        if(!empty($request->schedule_id)){
+            $get_notification = Schedule_Notification::where('id', $request->schedule_id)->first();
+            if(!empty($get_notification)){
+                $schedules = Schedule::whereIn('id', $get_notification->schedule_id);
+                $get_notification->update(['read_at'=> 1]);
+            }
+        }
+
+        // return $request->all();
+
+        if(!empty($request->get('sort_in') && !empty($request->get('sort_by')))) $schedules = Schedule::sort($request);
+
+        if(!empty($request->search_string)) $schedules = Schedule::search(trim($request->search_string));
+
+        $total = $schedules->count();
+
+        $total_schedule = Schedule::count();
+
+        $total_schedule_today = Schedule::whereDate('date', Carbon::now()->toDateString())->count();
+
+        $schedules = $schedules->orderBy('id', 'desc')->paginate((!empty($request->show) ? $request->show : 10));
+		return view('pages.scheduling.index', [
+            'schedules' => $schedules,
+            'total_schedule' => $total_schedule,
+            'total' => $total,
+            'total_today' => $total_schedule_today,
+        ]);
     }
 
     /**
@@ -26,7 +55,8 @@ class ScheduleController extends Controller
      */
     public function create()
     {
-		return view('pages.scheduling.create');
+        $total_schedule_today = Schedule::whereDate('date', Carbon::now()->toDateString())->count();
+		return view('pages.scheduling.create', ['total_today' => $total_schedule_today]);
     }
 
     /**
@@ -39,13 +69,15 @@ class ScheduleController extends Controller
     {
 		$v = Validator::make($request->all(), [
 			'name' => 'required|string|max:255',
+			'contact' => 'required',
+			'address' => 'required|string|max:255',
 			'date' => 'required',
 			'time' => 'required',
 		]);
 
 		if ($v->fails()) return back()->withInput()->withErrors($v->errors());
 
-        if (Schedule::insert($request->except(['_token']))) {
+        if (Schedule::create($request->except(['_token']))) {
 			return back()->with([
 				'notif.style' => 'success',
 				'notif.icon' => 'plus-circle',
@@ -127,7 +159,6 @@ class ScheduleController extends Controller
      */
     public function destroy($id)
     {
-        // return $id;
         if (Schedule::findOrFail($id)->delete()) {
             return back()->with([
                 'notif.style' => 'success',
@@ -141,6 +172,17 @@ class ScheduleController extends Controller
                 'notif.icon' => 'times-circle',
                 'notif.message' => 'Failed to delete - Please try again',
             ]);
+        }
+    }
+
+    public function checkScheduleDate(Request $request){
+        // return $request->all();
+
+        // CHECK IF FETCHED DATA IS REAL DATE
+        // return DateTime::createFromFormat('Y-m-d H:i:s', $request->date);
+        // dd(DateTime::createFromFormat('Y-m-d', $request->date));
+        if(DateTime::createFromFormat('Y-m-d', $request->date) !== FALSE){
+            return Schedule::whereDate('date', $request->date)->count();
         }
     }
 }
