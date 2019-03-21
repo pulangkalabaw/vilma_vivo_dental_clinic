@@ -29,7 +29,7 @@
 									{{ method_field('PUT') }}
 									<div class="row">
 										<div class="col-md-3">
-											name
+											Name
 										</div>
 										<div class="col-md-9">
 											<input type="text" name="name" id="" class="form-control" value="{{ $schedule->name }}" required>
