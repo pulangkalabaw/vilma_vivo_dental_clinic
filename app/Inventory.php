@@ -18,6 +18,16 @@ class Inventory extends Model
 		return $this->hasOne('App\User', 'id', 'added_by');
 	}
 
+	public function history()
+	{
+		return $this->hasMany('App\InventoryHistory', 'inventory_id', 'id');
+	}
+
+	public function out()
+	{
+		return $this->hasMany('App\InventoryOut', 'inventory_id', 'id')->orderBy('id', 'desc');
+	}
+
 	public function scopeSort ($query, $request) {
 
         // Check first if sort_in (database column) is exists!

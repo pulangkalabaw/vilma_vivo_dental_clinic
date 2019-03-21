@@ -23,7 +23,11 @@ Route::group(['middleware' => ['auth', 'notification'], 'as' => 'app.'], functio
 
 	Route::get('/home', 'HomeController@index')->name('home'); // DASHBOARD
     Route::resource('users', 'UserController');
-    Route::resource('inventory', 'InventoryController');
+
+	Route::get('inventory/out', 'InventoryController@out')->name('inventory.out');
+	Route::post('inventory/out', 'InventoryController@processOut')->name('inventory.out.process');
+	Route::resource('inventory', 'InventoryController');
+
 	Route::get('schedule/check-date', 'ScheduleController@checkScheduleDate')->name('check-date');
     Route::resource('schedule', 'ScheduleController');
     Route::resource('record', 'RecordController');

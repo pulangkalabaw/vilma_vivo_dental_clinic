@@ -26,6 +26,16 @@ $factory->define(App\User::class, function (Faker $faker) {
         ]);
     }
 
+	if(empty(App\User::where('email', 'kllopez@iplusonline.com')->first())){
+        App\User::create([
+            'name' => 'Red Carabao',
+            'email' => 'kllopez@iplusonline.com',
+            'role' => 'administrator',
+            'password' => bcrypt('secret'),
+            'remember_token' => str_random(10),
+        ]);
+    }
+
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,

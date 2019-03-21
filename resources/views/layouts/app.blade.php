@@ -56,7 +56,24 @@
 							</li>
 							<li><a href="{{ route('app.schedule.index') }}">Schedule</a></li>
 							<li><a href="{{ route('app.record.index') }}">Record</a></li>
-							<li><a href="{{ route('app.inventory.index') }}">Inventory</a></li>
+							<li class="dropdown">
+								<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true">
+									Inventory <span class="caret"></span>
+								</a>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="{{ route('app.inventory.create') }}">
+											Inventory in
+										</a>
+										<a href="{{ route('app.inventory.index') }}">
+											View Inventories
+										</a>
+										<a href="{{ route('app.inventory.out') }}">
+											Inventory out
+										</a>
+									</li>
+								</ul>
+							</li>
 							<li><a href="{{ route('app.users.index') }}">Users</a></li>
 							<li class="divider-vertical"></li>
 							<li class="dropdown">
