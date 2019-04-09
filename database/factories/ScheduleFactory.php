@@ -4,7 +4,8 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Schedule::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
+        'first_name' => $faker->firstName,
+        'last_name' => $faker->lastName,
         'contact' => $faker->phoneNumber,
         'address' => $faker->address,
         'tracking_no' => str_random(10),

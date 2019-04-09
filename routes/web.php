@@ -26,6 +26,9 @@ Route::group(['middleware' => ['auth', 'notification'], 'as' => 'app.'], functio
 
 	Route::get('inventory/out', 'InventoryController@out')->name('inventory.out');
 	Route::post('inventory/out', 'InventoryController@processOut')->name('inventory.out.process');
+	Route::get('inventory/in', 'InventoryController@in')->name('inventory.in');
+	Route::post('inventory/in', 'InventoryController@processIn')->name('inventory.in.process');
+	
 	Route::resource('inventory', 'InventoryController');
 
 	Route::get('schedule/check-date', 'ScheduleController@checkScheduleDate')->name('check-date');

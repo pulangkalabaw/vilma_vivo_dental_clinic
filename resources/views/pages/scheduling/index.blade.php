@@ -118,7 +118,7 @@
 					<tbody>
 						@foreach ($schedules as $schedule)
 							<tr>
-								<td>{{ $schedule->tracking_no }}</td>
+								<td>{{ $schedule->tracking_no ? $schedule->tracking_no : '-' }}</td>
 								<td>{{ $schedule->name }}</td>
 								<td>{{ $schedule->contact }}</td>
 								<td>{{ $schedule->address }}</td>

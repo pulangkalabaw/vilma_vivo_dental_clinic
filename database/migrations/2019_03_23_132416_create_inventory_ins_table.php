@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSchedulesTable extends Migration
+class CreateInventoryInsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateSchedulesTable extends Migration
      */
     public function up()
     {
-        Schema::create('schedules', function (Blueprint $table) {
+        Schema::create('inventory_ins', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('contact');
-            $table->string('address');
-            $table->string('tracking_no');
-            $table->date('date');
-            $table->time('time');
+			$table->integer('inventory_id')->unsigned();
+			$table->integer('quantity');
+            $table->integer('remaining_quantity');
+            $table->text('remarks')->nullable();
+            $table->integer('added_by')->unsigned();
             $table->timestamps();
         });
     }
@@ -33,6 +31,6 @@ class CreateSchedulesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schedules');
+        Schema::dropIfExists('inventory_ins');
     }
 }

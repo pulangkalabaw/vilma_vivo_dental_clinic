@@ -62,7 +62,7 @@
 								</a>
 								<ul class="dropdown-menu">
 									<li>
-										<a href="{{ route('app.inventory.create') }}">
+										<a href="{{ route('app.inventory.in') }}">
 											Inventory in
 										</a>
 										<a href="{{ route('app.inventory.index') }}">

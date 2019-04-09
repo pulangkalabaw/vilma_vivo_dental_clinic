@@ -2,6 +2,77 @@
 
 @section('content')
 
+
+	<div id="myin" class="modal fade" role="dialog">
+		<div class="modal-dialog" style="width: 950px;">
+
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">Stock in History</h4>
+				</div>
+				<div class="modal-body">
+					<div style="background: transparent; height: 400px; overflow:auto">
+					<table class="table table-hovered">
+						<thead>
+							<tr>
+								<th>
+									Inventory
+								</th>
+								<th>
+									Quantity in
+								</th>
+								<th>
+									Current quantity
+								</th>
+								<th>
+									Item Date
+								</th>
+								<th>Remarks</th>
+								<th>User</th>
+								<th>Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							@foreach ($inventory->in as $in)
+								<tr>
+									<td>
+										{{ $in->inventory->item_name }}
+									</td>
+									<td>
+										{{ $in->quantity }}
+									</td>
+									<td>
+										{{ $in->remaining_quantity }}
+									</td>
+									<td>
+										{{ $in->created_at }}
+									</td>
+									<td>
+										{{ $in->remarks }}
+									</td>
+									<td>
+										{{ $in->added->name }}
+									</td>
+									<td>
+										{{ $in->created_at->diffForHumans() }}
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
 	<div id="myout" class="modal fade" role="dialog">
 		<div class="modal-dialog" style="width: 950px;">
 
@@ -9,7 +80,7 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Stock History</h4>
+					<h4 class="modal-title">Stock out History</h4>
 				</div>
 				<div class="modal-body">
 					<div style="background: transparent; height: 400px; overflow:auto">
@@ -157,7 +228,7 @@
 						<div class="row">
 							<div class="col-md-6">
 								<span class="fa fa-book"></span>
-								Inventory Management / Create
+								Inventory Management / {{ $inventory->item_name }}
 							</div>
 							<div class="col-md-6 text-right">
 								<a href="{{ route('app.inventory.create') }}" class="btn btn-sm btn-primary">
@@ -249,7 +320,8 @@
 
 								<hr>
 								{{-- <button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myModal">View inventory history</button> --}}
-								<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myout">View stock history</button>
+								<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myout">View stock out history</button>
+								<button type="button" class="btn btn-info btn-xs" data-toggle="modal" data-target="#myin">View stock in history</button>
 
 							</div>
 						</div>

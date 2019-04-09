@@ -42,15 +42,27 @@
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
+
 										<div class="row">
 											<div class="col-md-3">
-												Name
+												First Name
 											</div>
 											<div class="col-md-9">
-												<input type="text" name="name" id="" class="form-control" value="{{ old('name') }}" required>
+												<input type="text" name="first_name" id="" class="form-control" value="{{ old('name') }}" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
+
+										<div class="row">
+											<div class="col-md-3">
+												Last Name
+											</div>
+											<div class="col-md-9">
+												<input type="text" name="last_name" id="" class="form-control" value="{{ old('name') }}" required>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
+
 										<div class="row">
 											<div class="col-md-3">
 												Contact
@@ -60,6 +72,7 @@
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
+
 										<div class="row">
 											<div class="col-md-3">
 												Address

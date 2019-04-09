@@ -6,11 +6,58 @@ use Auth;
 use Validator;
 use App\Inventory;
 use App\InventoryOut;
+use App\InventoryIn;
 use App\InventoryHistory;
 use Illuminate\Http\Request;
 
 class InventoryController extends Controller
 {
+
+	public function in (Request $request)
+	{
+		$inventory = Inventory::get();
+		return view('pages.inventory.in', [
+			'inventories' => $inventory
+		]);
+	}
+
+	public function processIn (Request $request)
+	{
+		$v = Validator::make($request->all(), [
+			'inventory_id' => 'required',
+			'quantity' => 'required|string',
+			'remarks' => 'nullable|max:199',
+		]);
+
+		if ($v->fails()) return back()->withInput()->withErrors($v->errors());
+
+		$inventory = Inventory::findOrFail($request->get('inventory_id'));
+		$current_quantity = (int) $inventory->quantity + $request->post('quantity');
+
+
+		$inventory = $inventory->update(['quantity' => $current_quantity]);
+		$request['added_by'] = Auth::user()->id;
+
+		$request['remaining_quantity'] = $current_quantity;
+
+		if (InventoryIn::create($request->except(['_token']))) {
+
+			return back()->with([
+				'notif.style' => 'success',
+				'notif.icon' => 'plus-circle',
+				'notif.message' => 'Inventory out successful!',
+			]);
+		}
+		else {
+			return back()->with([
+				'notif.style' => 'danger',
+				'notif.icon' => 'times-circle',
+				'notif.message' => 'Failed to out',
+			]);
+		}
+	}
+
+
 
 	public function out (Request $request)
 	{
@@ -163,7 +210,7 @@ class InventoryController extends Controller
      */
     public function edit($id)
     {
-		$inventory = Inventory::with(['history', 'out', 'out.added', 'out.inventory'])->findOrFail($id);
+		$inventory = Inventory::with(['history', 'out', 'out.added', 'out.inventory', 'in', 'in.added', 'in.inventory'])->findOrFail($id);
 		return view('pages.inventory.edit', ['inventory' => $inventory]);
     }
 

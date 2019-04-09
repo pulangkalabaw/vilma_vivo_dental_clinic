@@ -28,6 +28,11 @@ class Inventory extends Model
 		return $this->hasMany('App\InventoryOut', 'inventory_id', 'id')->orderBy('id', 'desc');
 	}
 
+	public function in()
+	{
+		return $this->hasMany('App\InventoryIn', 'inventory_id', 'id')->orderBy('id', 'desc');
+	}
+
 	public function scopeSort ($query, $request) {
 
         // Check first if sort_in (database column) is exists!
