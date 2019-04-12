@@ -456,7 +456,7 @@
 
 		$('input[type="checkbox"]').prop('checked', false);
 
-		alert(thisSymptom);
+		// alert(thisSymptom);
 		// alert(tooth);
 		$('#tooth-image').attr('src', '{{ asset('public/assets/images/tooths/' ) }}/' + tooth + '.png');
 		$('#tooth-hidden').val(tooth);

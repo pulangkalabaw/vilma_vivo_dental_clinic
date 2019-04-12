@@ -8,6 +8,7 @@ use App\Schedule;
 use App\User;
 use App\Record;
 use App\Inventory;
+use App\Tooth_Activity;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -27,7 +28,7 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
 		$inventory = Inventory::count();
 
@@ -46,12 +47,36 @@ class HomeController extends Controller
 		// Record
 		$record_count = Record::count();
 
+        // Record Summary
+        $year = !empty($request->year) ? $request->year : Carbon::now()->year;
+        // return Carbon::parse($request->month . ', ' . $year)->month;
+        $month = !empty($request->month) ? Carbon::parse($request->month)->month : Carbon::now()->month;
+        $history = Tooth_Activity::whereYear('created_at', $year)->whereMonth('created_at', $month)->get();
+        $list = treatmentList();
+
+        foreach($list as $index => $treatment){
+            $record_summary_count[$treatment] = 0;
+
+            foreach($history as $his){
+                $get_treatments = explode(",", $his['symptom']);
+
+                foreach($get_treatments as $gtreatment){
+                    $trimmed = trim($gtreatment);
+
+                    if($trimmed == $treatment){
+                        $record_summary_count[$treatment]++;
+                    }
+                }
+            }
+        }
+
         return view('home', [
 			'count_user_roles' => $count_user_roles,
 			'inventory_count' => $inventory,
 			'sched_today' => $today_sched,
 			'sched_pending' => $pending,
 			'record_count' => $record_count,
+			'record_summary' => $record_summary_count,
 		]);
     }
 }

@@ -127,7 +127,6 @@
 													for($x = 17; $x <= 32; $x++){
 														$bottomTooths []= 'tooth-' . $x;
 													}
-													// dd($topTooths);
 												@endphp
 												<center>
 													<table>

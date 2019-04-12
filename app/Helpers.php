@@ -38,4 +38,19 @@ function checkTreatment($treatment){
     }
 }
 
+function treatmentList(){
+    return [
+        'root',
+        'cosmetic_dentistry',
+        'dental_crown',
+        'tooth_whitening',
+        'dental_implants',
+        'dental_bridge',
+        'periodontics',
+        'orthodontics',
+        'dentures',
+        'maxillofacial',
+    ];
+}
+
 ?>

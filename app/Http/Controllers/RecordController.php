@@ -189,6 +189,7 @@ class RecordController extends Controller
                     if(empty($check_if_added)){
                         $get_added[$index]['record_id'] = $id;
                         $get_added[$index]['tooth'] = $tooth['tooth'];
+                        $get_added[$index]['color'] = $tooth['color'];
                         $get_added[$index]['symptom'] = $tooth['symptom'];
                         $get_added[$index]['description'] = $tooth['description'];
                         $get_added[$index]['created_at'] = Carbon::now()->toDateString();
@@ -207,6 +208,7 @@ class RecordController extends Controller
                         Tooth_Record::create([
                             'record_id' => $id,
                             'tooth' => $tooth['tooth'],
+                            'color' => $tooth['color'],
                             'symptom' => $tooth['symptom'],
                             'description' => $tooth['description'],
                         ]);
@@ -215,6 +217,7 @@ class RecordController extends Controller
                             Tooth_Record::create([
                                 'record_id' => $id,
                                 'tooth' => $tooth['tooth'],
+                                'color' => $tooth['color'],
                                 'symptom' => $tooth['symptom'],
                                 'description' => $tooth['description'],
                             ]);
