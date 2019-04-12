@@ -76,11 +76,17 @@
 					<thead>
 						<tr>
 							<th>
-								Name
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+								First Name
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'first_name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
+								<th>
+									Last Name
+									<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'last_name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+										<span class='fa fa-sort'></span>
+									</a>
+								</th>
 							<th>
 								Contact
 								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'contact', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
@@ -99,7 +105,8 @@
 					<tbody>
 						@foreach ($records as $record)
 							<tr>
-								<td>{{ $record->name }}</td>
+								<td>{{ $record->first_name }}</td>
+								<td>{{ $record->last_name }}</td>
 								<td>{{ $record->contact }}</td>
 								<td>{{ $record->address }}</td>
 								<td>

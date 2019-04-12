@@ -77,14 +77,20 @@
 					<thead>
 						<tr>
 							<th>
-								Tracking No
+								ID No.
 								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'tracking_no', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
 							<th>
-								Name
-								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+								First Name
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'first_name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
+									<span class='fa fa-sort'></span>
+								</a>
+							</th>
+							<th>
+								Last Name
+								<a data-toggle="tooltip" title="Sort" href="{{ request()->fullUrlWithQuery(['sort_in' => 'last_name', 'sort_by' => (Request::get('sort_by') == "asc") ? 'desc' : 'asc']) }}">
 									<span class='fa fa-sort'></span>
 								</a>
 							</th>
@@ -119,7 +125,8 @@
 						@foreach ($schedules as $schedule)
 							<tr>
 								<td>{{ $schedule->tracking_no ? $schedule->tracking_no : '-' }}</td>
-								<td>{{ $schedule->name }}</td>
+								<td>{{ $schedule->first_name }}</td>
+								<td>{{ $schedule->last_name }}</td>
 								<td>{{ $schedule->contact }}</td>
 								<td>{{ $schedule->address }}</td>
 								@php

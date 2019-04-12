@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
     protected $table = "records";
-    protected $fillabe = ['name', 'contact', 'address'];
+    protected $fillabe = ['first_name', 'last_name', 'initial_name', 'contact', 'address'];
 
     public function tooth() {
         return $this->hasMany('\App\Tooth_Record', 'record_id', 'id');
@@ -16,9 +16,11 @@ class Record extends Model
 
     public  function scopeSearch ($query, $value) {
         $val = trim($value);
-        return $query->where('name', 'LIKE', "%".$val."%")
-        ->orWhere('contact', 'LIKE', "%".$val."%")
-        ->orWhere('address', 'LIKE', "%".$val."%");
+        return $query->where('first_name', 'LIKE', "%" . $val . "%")
+        ->orWhere('last_name', 'LIKE', "%" . $val . "%")
+        ->orWhere('initial_name', 'LIKE', "%" . $val . "%")
+        ->orWhere('contact', 'LIKE', "%" . $val . "%")
+        ->orWhere('address', 'LIKE', "%" . $val . "%");
     }
 
 	public function scopeSort ($query, $request) {

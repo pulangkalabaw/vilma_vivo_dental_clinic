@@ -29,10 +29,40 @@
 									{{ method_field('PUT') }}
 									<div class="row">
 										<div class="col-md-3">
-											Name
+											ID Number
 										</div>
 										<div class="col-md-9">
-											<input type="text" name="name" id="" class="form-control" value="{{ $schedule->name }}" required>
+											<input type="text" name="tracking_no" id="" class="form-control" value="{{ $schedule->tracking_no }}" readonly>
+										</div>
+									</div>
+									<div class="clearfix"></div><br />
+
+									<div class="row">
+										<div class="col-md-3">
+											First Name
+										</div>
+										<div class="col-md-9">
+											<input type="text" name="first_name" id="" class="form-control" value="{{ $schedule->first_name }}" required>
+										</div>
+									</div>
+									<div class="clearfix"></div><br />
+
+									<div class="row">
+										<div class="col-md-3">
+											Last Name
+										</div>
+										<div class="col-md-9">
+											<input type="text" name="last_name" id="" class="form-control" value="{{ $schedule->last_name }}" required>
+										</div>
+									</div>
+									<div class="clearfix"></div><br />
+
+									<div class="row">
+										<div class="col-md-3">
+											Initial Name
+										</div>
+										<div class="col-md-9">
+											<input type="text" name="initial_name" id="" class="form-control" value="{{ $schedule->initial_name }}" required>
 										</div>
 									</div>
 									<div class="clearfix"></div><br />

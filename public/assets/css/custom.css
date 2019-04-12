@@ -11,7 +11,7 @@ img { display: block; }
 #image-overlay:hover img { opacity: 0.8; }
 
 .cursor-hand{
-    cursor: pointer;
+    cursor: pointer !important;
 }
 
 .th-container {
@@ -47,9 +47,46 @@ img { display: block; }
     border-right: 1px solid #ffffff;
 }
 
-.overlay.gum_problem, .overlay-modal.gum_problem{
-    background: red;
+.overlay.color1, .overlay-modal.color1, .color1{
+    background: #C60820 !important;
 }
+
+.overlay.color2, .overlay-modal.color2, .color2{
+    background: #FAE596 !important;
+}
+
+.overlay.color3, .overlay-modal.color3, .color3{
+    background: #3FB0AC !important;
+}
+
+.overlay.color4, .overlay-modal.color4, .color4{
+    background: #C19434 !important;
+}
+
+.overlay.color5, .overlay-modal.color5, .color5{
+    background: #CDD423 !important;
+}
+
+.overlay.color6, .overlay-modal.color6, .color6{
+    background: #E05916 !important;
+}
+
+.overlay.color7, .overlay-modal.color7, .color7{
+    background: #431C5D !important;
+}
+
+.overlay.color8, .overlay-modal.color8, .color8{
+    background: #000000 !important;
+}
+
+.overlay.color9, .overlay-modal.color9, .color9{
+    background: #F8E5E5 !important;
+}
+
+.overlay.color10, .overlay-modal.color10, .color10{
+    background: #3CA956 !important;
+}
+
 
 .overlay.cavities, .overlay-modal.cavities{
     background: green;

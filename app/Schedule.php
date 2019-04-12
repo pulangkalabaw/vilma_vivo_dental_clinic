@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Schedule extends Model
 {
     protected $table = "schedules";
-    protected $fillable = ['first_name', 'last_name', 'contact', 'address', 'date', 'time', 'tracking_no'];
+    protected $fillable = ['first_name', 'last_name', 'initial_name', 'contact', 'address', 'date', 'time', 'tracking_no'];
 
     public function scopeSearch ($query, $value) {
         $val = trim($value);
         return $query->where('first_name', 'LIKE', "%" . $val . "%")
         ->orWhere('last_name', 'LIKE', "%" . $val . "%")
+        ->orWhere('initial_name', 'LIKE', "%" . $val . "%")
         ->orWhere('contact', 'LIKE', "%" . $val . "%")
         ->orWhere('tracking_no', 'LIKE', "%" . $val . "%")
         ->orWhere('address', 'LIKE', "%" . $val . "%");

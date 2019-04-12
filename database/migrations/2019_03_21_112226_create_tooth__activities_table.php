@@ -18,6 +18,7 @@ class CreateToothActivitiesTable extends Migration
 			$table->string('record_id');
             $table->string('tooth');
             $table->string('symptom');
+            $table->string('color');
             $table->text('description')->nullable();
             $table->timestamps();
         });

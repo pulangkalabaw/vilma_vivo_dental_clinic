@@ -70,7 +70,9 @@ class ScheduleController extends Controller
         // return $request->all();
 		$v = Validator::make($request->all(), [
             'tracking_no' => 'required',
-			'name' => 'required|string|max:255',
+			'first_name' => 'required|string|max:255',
+			'last_name' => 'required|string|max:255',
+			'initial_name' => 'required|string|max:255',
 			'contact' => 'required',
 			'address' => 'required|string|max:255',
 			'date' => 'required',
@@ -107,7 +109,7 @@ class ScheduleController extends Controller
     			return back()->withInput()->with([
     				'notif.style' => 'danger',
     				'notif.icon' => 'times-circle',
-    				'notif.message' => 'Invalid Time! There is an existing schedule on '. date('h:i A', strtotime($schedule_time)) . ' (tracking no: ' . $schedule->tracking_no . '). Make sure the time is before 1 hour or after 1 hour of the current schedule',
+    				'notif.message' => 'Invalid Time! There is an existing schedule on '. date('h:i A', strtotime($schedule_time)) . ' (tracking no: ' . $schedule->tracking_no . '). Make sure the time is before 1 hour or after 1 hour of that schedule',
     			]);
             }
         }
@@ -162,7 +164,9 @@ class ScheduleController extends Controller
     {
         // return $request->all();
 		$v = Validator::make($request->all(), [
-			'name' => 'required|string|max:255',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+			'initial_name' => 'required|string|max:255',
 			'date' => 'required',
 			'time' => 'required',
 		]);
@@ -187,7 +191,7 @@ class ScheduleController extends Controller
 
         // CHECK IF TIME DOES'T HAVE A CONFLICT
         $date = Carbon::parse($request->date)->toDateString();
-        $schedules = Schedule::whereDate('date', $date)->get();
+        $schedules = Schedule::where('id', '<>', $id)->whereDate('date', $date)->get();
         foreach($schedules as $schedule){
             $schedule_time = Carbon::parse($request->time)->toTimeString();
             $one_hour_before = Carbon::parse($request->time)->subHour(1)->toTimeString();

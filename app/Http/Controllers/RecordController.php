@@ -60,7 +60,9 @@ class RecordController extends Controller
         // return $request->except(['_token', 'tooth', 'trackingNo', 'choose-option']);
         // return $request->all();
         $v = Validator::make($request->all(), [
-        	'name' => 'required',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+			'initial_name' => 'required|string|max:255',
         	'contact' => 'required',
         	'address' => 'required',
         ]);
@@ -68,15 +70,18 @@ class RecordController extends Controller
         if ($v->fails()) return back()->withInput()->withErrors($v->errors());
         // return $request->except(['_token', 'tooth']);
 
+        // return $request->tooth;
         $record_id = Record::insertGetId($request->except(['_token', 'tooth', 'trackingNo', 'choose-option']));
         if (!empty($record_id)) {
             $tooths = $request->tooth;
             foreach($tooths as $tooth){
+                // return $tooth['color'];
                 if(!empty($tooth['symptom'])){
                     if($tooth['symptom'] != 'normal'){
                         Tooth_Record::create([
                             'record_id' => $record_id,
                             'tooth' => $tooth['tooth'],
+                            'color' => $tooth['color'],
                             'symptom' => $tooth['symptom'],
                             'description' => $tooth['description'],
                         ]);
@@ -85,6 +90,7 @@ class RecordController extends Controller
                             'record_id' => $record_id,
                             'tooth' => $tooth['tooth'],
                             'symptom' => $tooth['symptom'],
+                            'color' => $tooth['color'],
                             'description' => $tooth['description'],
                         ]);
                     } else {
@@ -93,6 +99,7 @@ class RecordController extends Controller
                                 'record_id' => $record_id,
                                 'tooth' => $tooth['tooth'],
                                 'symptom' => $tooth['symptom'],
+                                'color' => $tooth['color'],
                                 'description' => $tooth['description'],
                             ]);
 
@@ -100,6 +107,7 @@ class RecordController extends Controller
                                 'record_id' => $record_id,
                                 'tooth' => $tooth['tooth'],
                                 'symptom' => $tooth['symptom'],
+                                'color' => $tooth['color'],
                                 'description' => $tooth['description'],
                             ]);
                         }
@@ -158,7 +166,9 @@ class RecordController extends Controller
     {
         // return $request->all();
         $v = Validator::make($request->all(), [
-        	'name' => 'required',
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+			'initial_name' => 'required|string|max:255',
         	'contact' => 'required',
         	'address' => 'required',
         ]);

@@ -35,7 +35,7 @@
 										</div>
 										<div class="row">
 											<div class="col-md-3">
-												Tracking Number
+												ID Number
 											</div>
 											<div class="col-md-9">
 												<input type="text" name="tracking_no" id="" class="form-control" value="{{ str_random(10) }}" readonly >
@@ -48,7 +48,7 @@
 												First Name
 											</div>
 											<div class="col-md-9">
-												<input type="text" name="first_name" id="" class="form-control" value="{{ old('name') }}" required>
+												<input type="text" name="first_name" id="" class="form-control" value="{{ old('first_name') }}" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -58,7 +58,17 @@
 												Last Name
 											</div>
 											<div class="col-md-9">
-												<input type="text" name="last_name" id="" class="form-control" value="{{ old('name') }}" required>
+												<input type="text" name="last_name" id="" class="form-control" value="{{ old('last_name') }}" required>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
+
+										<div class="row">
+											<div class="col-md-3">
+												Initial Name
+											</div>
+											<div class="col-md-9">
+												<input type="text" name="initial_name" id="" class="form-control" value="{{ old('initial_name') }}" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
