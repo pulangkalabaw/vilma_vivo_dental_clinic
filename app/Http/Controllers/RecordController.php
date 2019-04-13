@@ -190,6 +190,7 @@ class RecordController extends Controller
             foreach($tooths as $index => $tooth){
                 if(!empty($tooth['symptom'])){
                     $check_if_added = Tooth_Record::where('record_id', $id)->where('tooth', $tooth['tooth'])->first();
+                    // return $check_if_added;
                     if(empty($check_if_added)){
                         $get_added[$index]['record_id'] = $id;
                         $get_added[$index]['tooth'] = $tooth['tooth'];
@@ -198,6 +199,15 @@ class RecordController extends Controller
                         $get_added[$index]['description'] = $tooth['description'];
                         $get_added[$index]['created_at'] = Carbon::now()->toDateString();
                         $get_added[$index]['updated_at'] = Carbon::now()->toDateString();
+                    }
+
+                    // check tooth history if treatment doesn't change
+                    $check_history = Tooth_Activity::where('record_id', $id)->where('tooth', $tooth['tooth'])->first();
+                    // return $check_if_added;
+                    // return $check_history;
+                    if($check_history['symptom'] != $tooth['symptom']){
+                        // return 'sad';
+                        $check_history->update(['symptom' => $tooth['symptom'], 'color' => $tooth['color']]);
                     }
                 }
             }
