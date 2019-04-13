@@ -208,7 +208,13 @@ class RecordController extends Controller
                     if(!empty($check_history)){
                         if($check_history['symptom'] != $tooth['symptom']){
                             // return 'sad';
-                            $check_history->update(['symptom' => $tooth['symptom'], 'color' => $tooth['color']]);
+                            $check_history->update(['symptom' => $tooth['symptom']]);
+                        }
+                        if($check_history['description'] != $tooth['description']){
+                            $check_history->update(['description' => $tooth['description']]);
+                        }
+                        if($check_history['color'] != $tooth['color']){
+                            $check_history->update(['color' => $tooth['color']]);
                         }
                     }
                 }
