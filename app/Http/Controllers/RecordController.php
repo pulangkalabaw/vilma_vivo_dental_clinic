@@ -205,9 +205,11 @@ class RecordController extends Controller
                     $check_history = Tooth_Activity::where('record_id', $id)->where('tooth', $tooth['tooth'])->first();
                     // return $check_if_added;
                     // return $check_history;
-                    if($check_history['symptom'] != $tooth['symptom']){
-                        // return 'sad';
-                        $check_history->update(['symptom' => $tooth['symptom'], 'color' => $tooth['color']]);
+                    if(!empty($check_history)){
+                        if($check_history['symptom'] != $tooth['symptom']){
+                            // return 'sad';
+                            $check_history->update(['symptom' => $tooth['symptom'], 'color' => $tooth['color']]);
+                        }
                     }
                 }
             }
