@@ -20,6 +20,7 @@ class CreateSchedulesTable extends Migration
             $table->string('initial_name');
             $table->string('contact');
             $table->string('address');
+            $table->string('age');
             $table->string('tracking_no');
             $table->date('date');
             $table->time('time');

@@ -120,6 +120,16 @@
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
+
+										<div class="row">
+											<div class="col-md-3">
+												Age
+											</div>
+											<div class="col-md-9">
+												<input type="text" name="age" id="age" class="form-control" value="{{ old('age') }}" required>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
 									</div>
 								</div>
 							</div>
@@ -441,6 +451,7 @@
 					$('#initial_name').val(response.initial_name);
 					$('#address').val(response.address);
 					$('#contact').val(response.contact);
+					$('#age').val(response.age);
 					$('#trackMessage').hide();
 				} else {
 					$('#trackMessage').show();

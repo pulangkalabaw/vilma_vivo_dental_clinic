@@ -59,7 +59,7 @@
 												Initial Name
 											</div>
 											<div class="col-md-9">
-												<input type="text" name="last_name" id="" class="form-control" value="{{ $record->initial_name }}" required>
+												<input type="text" name="initial_name" id="" class="form-control" value="{{ $record->initial_name }}" required>
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
@@ -83,6 +83,16 @@
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
+
+										<div class="row">
+											<div class="col-md-3">
+												Age
+											</div>
+											<div class="col-md-9">
+												<input type="text" name="age" id="age" class="form-control" value="{{ $record->age }}" required>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
 									</div>
 								</div>
 							</div>
@@ -96,7 +106,7 @@
 													<div class="col-md-6">
 														<table id="example" class="table table-bordered">
 															<tbody>
-																@foreach($tooth_activity as $activity)
+																@foreach($tooth_record as $activity)
 																<tr>
 																	<td class="{{ $activity['color'] }}" width="50"></td>
 																	<td><b>{{ $activity['tooth'] }}</b><br>
@@ -180,7 +190,7 @@
     																	@endforeach
     																@endif
                                                                     >
-																	<input type="hidden" name="tooth[{{ $index + 16 }}][symptom]" id="tooth_color_{{ $tooth }}"
+																	<input type="hidden" name="tooth[{{ $index }}][color]" id="tooth_color_{{ $tooth }}"
                                                                     @if(!empty($record->tooth))
     																	@foreach($record->tooth as $tooth_infos)
     																		@if($tooth_infos->tooth == $tooth)
@@ -244,7 +254,7 @@
     																	@endforeach
     																@endif
                                                                     >
-																	<input type="hidden" name="tooth[{{ $index + 16 }}][symptom]" id="tooth_color_{{ $tooth }}"
+																	<input type="hidden" name="tooth[{{ $index + 16 }}][color]" id="tooth_color_{{ $tooth }}"
                                                                     @if(!empty($record->tooth))
     																	@foreach($record->tooth as $tooth_infos)
     																		@if($tooth_infos->tooth == $tooth)

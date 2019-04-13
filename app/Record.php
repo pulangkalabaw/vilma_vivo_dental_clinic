@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
     protected $table = "records";
-    protected $fillabe = ['first_name', 'last_name', 'initial_name', 'contact', 'address'];
+    protected $fillabe = ['first_name', 'last_name', 'initial_name', 'contact', 'address', 'age'];
 
     public function tooth() {
         return $this->hasMany('\App\Tooth_Record', 'record_id', 'id');
@@ -20,6 +20,7 @@ class Record extends Model
         ->orWhere('last_name', 'LIKE', "%" . $val . "%")
         ->orWhere('initial_name', 'LIKE', "%" . $val . "%")
         ->orWhere('contact', 'LIKE', "%" . $val . "%")
+        ->orWhere('age', 'LIKE', "%" . $val . "%")
         ->orWhere('address', 'LIKE', "%" . $val . "%");
     }
 

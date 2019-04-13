@@ -75,6 +75,7 @@ class ScheduleController extends Controller
 			'initial_name' => 'required|string|max:255',
 			'contact' => 'required',
 			'address' => 'required|string|max:255',
+			'age' => 'required',
 			'date' => 'required',
 			'time' => 'required',
 		]);
@@ -167,6 +168,9 @@ class ScheduleController extends Controller
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
 			'initial_name' => 'required|string|max:255',
+			'contact' => 'required',
+			'address' => 'required|string|max:255',
+            'age' => 'required',
 			'date' => 'required',
 			'time' => 'required',
 		]);

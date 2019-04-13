@@ -73,6 +73,16 @@
 											</div>
 										</div>
 										<div class="clearfix"></div><br />
+
+										<div class="row">
+											<div class="col-md-3">
+												<h5>Age</h5>
+											</div>
+											<div class="col-md-9">
+                                                <h5>{{ $record['age'] }}</h5>
+											</div>
+										</div>
+										<div class="clearfix"></div><br />
 									</div>
 								</div>
 							</div>
@@ -86,7 +96,7 @@
 													<div class="col-md-6">
 														<table id="example" class="table table-bordered">
 															<tbody>
-																@foreach($tooth_activity as $activity)
+																@foreach($tooth_record as $activity)
 																<tr>
 																	<td class="{{ $activity['color'] }}" width="50"></td>
 																	<td><b>{{ $activity['tooth'] }}</b><br>

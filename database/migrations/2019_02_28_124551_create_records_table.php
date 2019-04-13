@@ -20,6 +20,7 @@ class CreateRecordsTable extends Migration
             $table->string('initial_name');
             $table->string('contact');
             $table->string('address')->nullable();
+            $table->string('age');
             $table->timestamps();
         });
     }

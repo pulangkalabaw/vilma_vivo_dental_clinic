@@ -65,6 +65,7 @@ class RecordController extends Controller
 			'initial_name' => 'required|string|max:255',
         	'contact' => 'required',
         	'address' => 'required',
+        	'age' => 'required',
         ]);
 
         if ($v->fails()) return back()->withInput()->withErrors($v->errors());
@@ -138,8 +139,9 @@ class RecordController extends Controller
     public function show($id)
     {
         $record = Record::where('id', $id)->with(['tooth'])->first();
+        $tooth_record = Tooth_Record::where('record_id', $id)->orderBy('id', 'desc')->get();
         $tooth_activity = Tooth_Activity::where('record_id', $id)->orderBy('id', 'desc')->get();
-		return view('pages.record.show', compact('record', 'tooth_activity'));
+		return view('pages.record.show', compact('record', 'tooth_record', 'tooth_activity'));
     }
 
     /**
@@ -151,8 +153,9 @@ class RecordController extends Controller
     public function edit($id)
     {
         $record = Record::where('id', $id)->with(['tooth'])->first();
+        $tooth_record = Tooth_Record::where('record_id', $id)->orderBy('id', 'desc')->get();
         $tooth_activity = Tooth_Activity::where('record_id', $id)->orderBy('id', 'desc')->get();
-		return view('pages.record.edit', compact('record', 'tooth_activity'));
+		return view('pages.record.edit', compact('record', 'tooth_record', 'tooth_activity'));
     }
 
     /**
@@ -171,6 +174,7 @@ class RecordController extends Controller
 			'initial_name' => 'required|string|max:255',
         	'contact' => 'required',
         	'address' => 'required',
+        	'age' => 'required',
         ]);
 
         if ($v->fails()) return back()->withInput()->withErrors($v->errors());
@@ -228,14 +232,14 @@ class RecordController extends Controller
 			return back()->with([
 				'notif.style' => 'success',
 				'notif.icon' => 'plus-circle',
-				'notif.message' => 'Added successful!',
+				'notif.message' => 'Updated successful!',
 			]);
 		}
 		else {
 			return back()->with([
 				'notif.style' => 'danger',
 				'notif.icon' => 'times-circle',
-				'notif.message' => 'Failed to add',
+				'notif.message' => 'Failed to Update',
 			]);
 		}
     }

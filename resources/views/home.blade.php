@@ -110,7 +110,6 @@
 												<option value="{{ $x }}"
 												@if(!empty(request()->year))
 													@if(request()->year == $x)
-														{{-- {{ dd(request()->year) }} --}}
 														selected
 													@endif
 												@else
